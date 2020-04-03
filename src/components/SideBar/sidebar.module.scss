@@ -1,0 +1,53 @@
+.sideBar {
+  background-color: #212224;
+  width: 240px;
+  min-width: 240px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: calc(100vh - 56px);
+  color: #d6d6d6;
+  transition: all 0.3s;
+
+  hr {
+    border: 1px solid #2e3133;
+    border-radius: 1px;
+  }
+
+  .navVertical {
+    width: 100%;
+
+    .navTable {
+      display: table;
+    }
+
+    .navLink {
+      color: #d6d6d6;
+      font-size: 14px;
+      height: 40px;
+      display: table-cell;
+      width: 100%;
+      vertical-align: middle !important;
+
+      &:hover {
+        background-color: #2e3133;
+      }
+
+      img {
+        margin-right: 10px !important;
+      }
+
+      .icon {
+        margin-right: 10px;
+      }
+    }
+
+    .active {
+      background-color: #2e3133;
+    }
+
+    p {
+      margin-left: 10px;
+      margin-bottom: 5px;
+    }
+  }
+}

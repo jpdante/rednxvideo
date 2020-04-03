@@ -1,0 +1,65 @@
+// -- Body --
+
+$bg-dark: #282A2C;
+$body-bg: #282A2C;
+$body-color: #c9d2db;
+
+// -- Navbar --
+$navbar-searchbar: #1a1a1a;
+
+// -- Close Button --
+$close-color: #ffffff;
+$close-text-shadow: 0 1px 0 #000000 !default;
+
+// -- Card --
+$card-bg: #282a2c;
+$card-spacer-y: 5px;
+$card-spacer-x: 5px;
+$card-border-color: rgba(#000000, 0);
+
+// -- Modal --
+$modal-content-bg: #1a1a1a;
+$modal-header-border-color: #1a1a1a;
+$modal-footer-border-color: #1a1a1a;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+body,
+html,
+#root {
+  height: 100%;
+  min-height: 100%;
+  min-width: 768px;
+}
+
+.sidebar-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+.page-content {
+  width: 100%;
+  min-height: calc(100% - 56px);
+  transition: all 0.3s;
+  top: 0;
+  right: 0;
+}
+
+.page-content.active {
+  width: 100%;
+}
+
+.col-md-3 {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.noAuthentication {
+  display: none !important;
+}
+
+.plyr {
+  width: 100% !important;
+  height: auto !important;
+}

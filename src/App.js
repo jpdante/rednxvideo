@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Routes from "./routes";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faSearch,
+  faBars,
+  faPlay,
+  faFire,
+  faHistory,
+  faSatelliteDish,
+  faHeart,
+  faThumbsUp,
+  faGraduationCap,
+  faGamepad,
+  faTheaterMasks,
+  faVial,
+  faCamera,
+  faFutbol
+} from "@fortawesome/free-solid-svg-icons";
+import "./styles/default.scss";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+library.add(
+  faSearch,
+  faBars,
+  faPlay,
+  faFire,
+  faHistory,
+  faSatelliteDish,
+  faHeart,
+  faThumbsUp,
+  faGraduationCap,
+  faGamepad,
+  faTheaterMasks,
+  faVial,
+  faCamera,
+  faFutbol
+);
 
+const App = () => <Routes />;
 export default App;
