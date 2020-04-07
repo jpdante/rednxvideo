@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -39,7 +40,7 @@ class VideoThumb extends Component {
             <img src="https://picsum.photos/256/256" alt="Avatar do Canal" />
           </div>
           <div className={styles.videoFooter}>
-            <p className={styles.videoTitle}>Este é o titulo do video</p>
+            <p className={styles.videoTitle}><Link to="/watch">Este é o titulo do video</Link></p>
             <div className={styles.channelName}>
               <a href="/">Nome do Canal</a>
             </div>

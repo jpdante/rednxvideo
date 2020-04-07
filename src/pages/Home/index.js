@@ -11,7 +11,7 @@ import styles from "./home.module.scss";
 class Home extends Component {
   render() {
     return (
-      <div>
+      <div className="fix-heigth">
         <NavBar />
         <div className="sidebar-wrapper">
           <SideBar />

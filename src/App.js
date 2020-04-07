@@ -10,12 +10,17 @@ import {
   faSatelliteDish,
   faHeart,
   faThumbsUp,
+  faThumbsDown,
   faGraduationCap,
   faGamepad,
   faTheaterMasks,
   faVial,
   faCamera,
-  faFutbol
+  faFutbol,
+  faShare,
+  faEye,
+  faEyeSlash,
+  faFlag
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/default.scss";
 
@@ -28,12 +33,17 @@ library.add(
   faSatelliteDish,
   faHeart,
   faThumbsUp,
+  faThumbsDown,
   faGraduationCap,
   faGamepad,
   faTheaterMasks,
   faVial,
   faCamera,
-  faFutbol
+  faFutbol,
+  faShare,
+  faEye,
+  faEyeSlash,
+  faFlag
 );
 
 const App = () => <Routes />;
