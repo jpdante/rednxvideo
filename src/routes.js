@@ -7,6 +7,7 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import Watch from "./pages/Watch";
+import Category from "./pages/Category";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -27,6 +28,7 @@ const Routes = () => (
       <Route exact path="/signin" component={SignIn} />
       <Route path="/signup" component={SignUp} />
       <Route path="/watch" component={Watch} />
+      <Route path="/category" component={Category} />
       <Route path="/" component={Home} />
       <Route path="*" component={() => <h1>Page not found</h1>} />
     </Switch>

@@ -1,0 +1,32 @@
+{
+  "components": {
+    "navbar": {
+      "discover": "Descobrir",
+      "following": "Seguindo",
+      "history": "Histórico",
+      "home": "Inicio",
+      "hot": "Em Alta",
+      "live": "Ao Vivo",
+      "login": "Entrar",
+      "recommended": "Recomendados",
+      "register": "Registrar",
+      "search": "Pesquisar"
+    }
+  },
+  "pages": {
+    "category": {
+      "comedy": "Comédia",
+      "education": "Educação",
+      "games": "Jogos",
+      "science": "Ciência",
+      "sports": "Esportes",
+      "unknown": "Desconhecida",
+      "vlog": "Vlogs"
+    },
+    "home": {
+      "followed": "Canais seguidos",
+      "recommended": "Recomendados",
+      "videosai": "Vídeos que achamos que vai gostar"
+    }
+  }
+}

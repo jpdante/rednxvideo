@@ -22,13 +22,19 @@ $modal-content-bg: #1a1a1a;
 $modal-header-border-color: #1a1a1a;
 $modal-footer-border-color: #1a1a1a;
 
+// -- Input --
+$input-bg: #212224;
+$input-border-color: #212224;
+$input-focus-border-color: #212224;
+$input-color: white;
+
 @import "node_modules/bootstrap/scss/bootstrap";
 
 body,
 html,
 #root {
   height: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   min-width: 768px;
 }
 
@@ -67,4 +73,8 @@ html,
   width: 100% !important;
   height: auto !important;
   border-radius: 5px 5px 0px 0px;
+}
+
+.disabled {
+  color: #636363 !important;
 }

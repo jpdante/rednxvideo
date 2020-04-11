@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import $ from "jquery";
+import { login } from "../../services/auth";
 
 import styles from "./loginmodal.module.scss";
 
@@ -14,6 +15,13 @@ class LoginModal extends Component {
     $("#registerModal").modal("hide");
     $("#loginModal").modal("show");
   }
+
+  login = async e => {
+    e.preventDefault();
+    login("token");
+    this.setState({ isAuthenticated: true });
+    window.location.reload();
+  };
 
   render() {
     return (
@@ -101,7 +109,7 @@ class LoginModal extends Component {
                     Esqueceu a sua senha ?
                   </a>
                 </div>
-                <button type="submit" className="btn btn-primary btn-block">
+                <button type="submit" className="btn btn-primary btn-block" onClick={this.login}>
                   Entrar
                 </button>
               </form>

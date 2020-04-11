@@ -11,16 +11,11 @@ class NavBar extends Component {
     isAuthenticated: isAuthenticated()
   };
 
-  handleClick = async e => {
-    e.preventDefault();
-    login("token");
-    this.setState({ isAuthenticated: true });
-  };
-
-  handleClick2 = async e => {
+  logout = async e => {
     e.preventDefault();
     logout();
     this.setState({ isAuthenticated: false });
+    window.location.reload();
   };
 
   render() {
@@ -208,7 +203,7 @@ class NavBar extends Component {
                 <a
                   className="dropdown-item"
                   href="/"
-                  onClick={this.handleClick2}
+                  onClick={this.logout}
                 >
                   Logout
                 </a>

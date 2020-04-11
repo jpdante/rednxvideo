@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom'
 
 import { isAuthenticated } from "../../services/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,18 +17,18 @@ class SideBar extends Component {
         <div id="main-nav">
           <nav className={`${styles.navVertical} nav flex-column`}>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <a className={`${styles.navLink} nav-link disabled`} href="/">
                 <FontAwesomeIcon icon="fire" className={styles.icon} /> Em Alta
               </a>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <a className={`${styles.navLink} nav-link disabled`} href="/">
                 <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />{" "}
                 Recomendados
               </a>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <a className={`${styles.navLink} nav-link disabled`} href="/">
                 <FontAwesomeIcon
                   icon="satellite-dish"
                   className={styles.icon}
@@ -36,13 +37,13 @@ class SideBar extends Component {
               </a>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <a className={`${styles.navLink} nav-link disabled`} href="/" alt="Desativado">
                 <FontAwesomeIcon icon="heart" className={styles.icon} />{" "}
                 Seguindo
               </a>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <a className={`${styles.navLink} nav-link disabled`} href="/">
                 <FontAwesomeIcon icon="history" className={styles.icon} />{" "}
                 Historico
               </a>
@@ -127,40 +128,40 @@ class SideBar extends Component {
         <nav className={`${styles.navVertical} nav flex-column`}>
           <p>Categorias</p>
           <li className={`${styles.navTable}`}>
-            <a className={`${styles.navLink} nav-link`} href="/">
+            <Link className={`${styles.navLink} nav-link`} to="/category?c=science">
               <FontAwesomeIcon icon="vial" className={styles.icon} />
               Ciência e Tecnologia
-            </a>
+            </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <a className={`${styles.navLink} nav-link`} href="/">
+            <Link className={`${styles.navLink} nav-link`} to="/category?c=comedy">
               <FontAwesomeIcon icon="theater-masks" className={styles.icon} />
               Comédia
-            </a>
+            </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <a className={`${styles.navLink} nav-link`} href="/">
+            <Link className={`${styles.navLink} nav-link`} to="/category?c=games">
               <FontAwesomeIcon icon="gamepad" className={styles.icon} />
               Jogos
-            </a>
+            </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <a className={`${styles.navLink} nav-link`} href="/">
+            <Link className={`${styles.navLink} nav-link`} to="/category?c=vlog">
               <FontAwesomeIcon icon="camera" className={styles.icon} />
               Vlogs
-            </a>
+            </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <a className={`${styles.navLink} nav-link`} href="/">
+            <Link className={`${styles.navLink} nav-link`} to="/category?c=sports">
               <FontAwesomeIcon icon="futbol" className={styles.icon} />
               Esportes
-            </a>
+            </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <a className={`${styles.navLink} nav-link`} href="/">
+            <Link className={`${styles.navLink} nav-link`} to="/category?c=education">
               <FontAwesomeIcon icon="graduation-cap" className={styles.icon} />
               Educação
-            </a>
+            </Link>
           </li>
         </nav>
       </div>

@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import dashjs from "dashjs";
 import Plyr from "plyr";
+import TextareaAutosize from "react-autosize-textarea";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { isAuthenticated } from "../../services/auth";
 
@@ -281,17 +282,74 @@ class Watch extends Component {
                 <div className={styles.commentsContainer}>
                   <div className={styles.postComment}>
                     {this.state.isAuthenticated ? (
-                      <img src="" alt="profile pic"/>
+                      <div className={`${styles.media} media`}>
+                        <img
+                          src="https://randomuser.me/api/portraits/men/65.jpg"
+                          alt="profile pic"
+                        />
+                        <div className="media-body">
+                          <TextareaAutosize
+                            className="form-control"
+                            placeholder="Digite aqui um comentário legal"
+                            rows="1"
+                          />
+                        </div>
+                      </div>
                     ) : (
                       <h5 className={styles.notAuthenticated}>
                         Você precisa{" "}
-                        <a role="button" data-toggle="modal" data-target="#loginModal">
+                        <a
+                          role="button"
+                          data-toggle="modal"
+                          data-target="#loginModal"
+                        >
                           fazer login
                         </a>{" "}
                         para poder enviar um comentário
                       </h5>
                     )}
                   </div>
+                  <ul className="list-unstyled">
+                    <li className={`${styles.media} media`}>
+                      <img src="https://picsum.photos/67/67" alt="..." />
+                      <div className="media-body">
+                        <a className="mt-0 mb-1" href="/">
+                          Nome do Canal
+                        </a>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel
+                        metus scelerisque ante sollicitudin. Cras purus odio,
+                        vestibulum in vulputate at, tempus viverra turpis. Fusce
+                        condimentum nunc ac nisi vulputate fringilla. Donec
+                        lacinia congue felis in faucibus.
+                      </div>
+                    </li>
+                    <li className={`${styles.media} media`}>
+                      <img src="https://picsum.photos/76/76" alt="..." />
+                      <div className="media-body">
+                        <a className="mt-0 mb-1" href="/">
+                          Nome do Canal
+                        </a>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel
+                        metus scelerisque ante sollicitudin. Cras purus odio,
+                        vestibulum in vulputate at, tempus viverra turpis. Fusce
+                        condimentum nunc ac nisi vulputate fringilla. Donec
+                        lacinia congue felis in faucibus.
+                      </div>
+                    </li>
+                    <li className={`${styles.media} media`}>
+                      <img src="https://picsum.photos/86/86" alt="..." />
+                      <div className="media-body">
+                        <a className="mt-0 mb-1" href="/">
+                          Nome do Canal
+                        </a>
+                        Cras sit amet nibh libero, in gravida nulla. Nulla vel
+                        metus scelerisque ante sollicitudin. Cras purus odio,
+                        vestibulum in vulputate at, tempus viverra turpis. Fusce
+                        condimentum nunc ac nisi vulputate fringilla. Donec
+                        lacinia congue felis in faucibus.
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
               <div
