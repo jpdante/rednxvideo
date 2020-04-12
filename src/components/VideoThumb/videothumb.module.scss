@@ -24,7 +24,16 @@
 
     .videoTitle {
       margin: 0;
+      a {
+        text-decoration: none;
+        color: #C9D2DB;
+      }
     }
+  }
+
+  .videoLink {
+    text-decoration: none;
+    color: #C9D2DB;
   }
 
   .video {

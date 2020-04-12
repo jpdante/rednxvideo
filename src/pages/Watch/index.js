@@ -1,6 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
+import { numberToText } from "../../library/numberText";
+
 import dashjs from "dashjs";
 import Plyr from "plyr";
 import TextareaAutosize from "react-autosize-textarea";
@@ -21,6 +24,7 @@ class Watch extends Component {
     following: false,
     showDescription: false,
     isAuthenticated: isAuthenticated(),
+    videoTitle: this.props.match.params.id,
   };
 
   follow = async (e) => {
@@ -100,6 +104,7 @@ class Watch extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div className="fix-heigth">
         <NavBar />
@@ -126,7 +131,7 @@ class Watch extends Component {
                   </div>
                   <div className={`${styles.videoClassification}`}>L</div>
                   <div className={`${styles.videoTitle}`}>
-                    <h5>Este é o titulo do video</h5>
+                    <h5>{this.state.videoTitle}</h5>
                   </div>
                 </div>
                 <div className={styles.descriptionContainer}>
@@ -134,16 +139,22 @@ class Watch extends Component {
                     <div
                       className={`${styles.channelImage} col-lg-12 col-xl-6`}
                     >
-                      <img
-                        src="https://picsum.photos/256/256"
-                        alt="Avatar do Canal"
-                      />
+                      <Link to="/channel/ellisiumx">
+                        <img
+                          src="https://picsum.photos/256/256"
+                          alt="Avatar do Canal"
+                        />
+                      </Link>
                       <div className={styles.channelNameContainer}>
                         <div className={styles.channelName}>
-                          Este é o Nome do Canal
+                          <Link to="/channel/ellisiumx">
+                            Este é o Nome do Canal
+                          </Link>
                         </div>
                         <div className={styles.channelFollowers}>
-                          108 mil seguidores
+                          {t("pages.watch.followers", {
+                            countText: numberToText(108_000),
+                          })}
                         </div>
                       </div>
                     </div>
@@ -161,7 +172,7 @@ class Watch extends Component {
                           icon="thumbs-up"
                           className={styles.icon}
                         />
-                        &nbsp;&nbsp; Curtir
+                        &nbsp;&nbsp; {t("shared.like")}
                       </button>
                       <button
                         type="button"
@@ -174,19 +185,20 @@ class Watch extends Component {
                           icon="thumbs-down"
                           className={styles.icon}
                         />
-                        &nbsp;&nbsp; Descurtir
+                        &nbsp;&nbsp; {t("shared.dislike")}
                       </button>
                       <button
                         type="button"
                         className="btn"
                         data-toggle="modal"
                         data-target="#reportModal"
+                        title={t("shared.report")}
                       >
                         <FontAwesomeIcon icon="flag" className={styles.icon} />
                       </button>
                       <button type="button" className="btn btn-outline-danger">
                         <FontAwesomeIcon icon="share" className={styles.icon} />
-                        &nbsp;&nbsp; Compartilhar
+                        &nbsp;&nbsp; {t("shared.share")}
                       </button>
                       <button
                         type="button"
@@ -199,7 +211,9 @@ class Watch extends Component {
                       >
                         <FontAwesomeIcon icon="heart" className={styles.icon} />
                         &nbsp;&nbsp;{" "}
-                        {this.state.following ? "Seguindo" : "Seguir"}
+                        {this.state.following
+                          ? t("shared.following")
+                          : t("shared.follow")}
                       </button>
                     </div>
                   </div>
@@ -275,7 +289,9 @@ class Watch extends Component {
                         className={styles.icon}
                       />
                       &nbsp;&nbsp;{" "}
-                      {this.state.showDescription ? "Ocultar" : "Mostrar"}
+                      {this.state.showDescription
+                        ? t("pages.watch.hideDescription")
+                        : t("pages.watch.showDescription")}
                     </button>
                   </div>
                 </div>
@@ -290,22 +306,22 @@ class Watch extends Component {
                         <div className="media-body">
                           <TextareaAutosize
                             className="form-control"
-                            placeholder="Digite aqui um comentário legal"
+                            placeholder={t("pages.watch.commentPlaceHolder")}
                             rows="1"
                           />
                         </div>
                       </div>
                     ) : (
                       <h5 className={styles.notAuthenticated}>
-                        Você precisa{" "}
+                        {t("pages.watch.needLogin.youNeed")}{" "}
                         <a
                           role="button"
                           data-toggle="modal"
                           data-target="#loginModal"
                         >
-                          fazer login
+                          {t("pages.watch.needLogin.toLogin")}
                         </a>{" "}
-                        para poder enviar um comentário
+                        {t("pages.watch.needLogin.toSend")}
                       </h5>
                     )}
                   </div>
@@ -379,4 +395,4 @@ class Watch extends Component {
   }
 }
 
-export default withRouter(Watch);
+export default withRouter(withTranslation()(Watch));

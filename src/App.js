@@ -1,6 +1,7 @@
 import React from "react";
 import Routes from "./routes";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import './services/i18n'
 import {
   faSearch,
   faBars,

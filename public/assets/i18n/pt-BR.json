@@ -1,0 +1,97 @@
+{
+  "components": {
+    "navbar": {
+      "discover": "Descobrir",
+      "following": "Seguindo",
+      "history": "Histórico",
+      "home": "Inicio",
+      "hot": "Em Alta",
+      "live": "Ao Vivo",
+      "login": "Entrar",
+      "logout": "Sair",
+      "register": "Registrar",
+      "search": "Pesquisar"
+    },
+    "thumbnail": {
+      "view": "{{countText}} visualização",
+      "view_plural": "{{countText}} visualizações"
+    }
+  },
+  "modals": {
+    "alreadyHasAccount": "Já possui uma conta ?",
+    "birthDate": "Data de Nascimento",
+    "confirmPassword": "Confirmar Senha",
+    "email": "Email",
+    "forgotPassword": "Esqueceu a sua senha ?",
+    "password": "Senha",
+    "passwordMinLength": "A senha precisa ter no mínimo 8 caracteres",
+    "username": "Usuário",
+    "usernameOrEmail": "Usuário ou Email"
+  },
+  "numbers": {
+    "billion": "{{count}} bilhão",
+    "billionMinify": "{{count}} bi",
+    "billion_plural": "{{count}} bilhões",
+    "million": "{{count}} milhões",
+    "millionMinify": "{{count}} mi",
+    "million_plural": "{{count}} milhões",
+    "thousand": "{{count}} mil",
+    "thousandMinify": "{{count}} mil",
+    "thousand_plural": "{{count}} mil"
+  },
+  "pages": {
+    "home": {
+      "followed": "Canais seguidos",
+      "videosai": "Vídeos que achamos que vai gostar"
+    },
+    "watch": {
+      "commentPlaceHolder": "Digite aqui um comentário legal e pressione a tecla ENTER para enviar-lo",
+      "followers": "{{countText}} seguidores",
+      "hideDescription": "Ocultar Descrição",
+      "needLogin": {
+        "toLogin": "fazer login",
+        "toSend": "para enviar um comentario",
+        "youNeed": "Você precisa"
+      },
+      "showDescription": "Mostrar Descrição"
+    }
+  },
+  "shared": {
+    "category": "Categoria",
+    "category_plural": "Categorias",
+    "comedy": "Comédia",
+    "dislike": "Descurtir",
+    "dislike_plural": "Descurtidas",
+    "education": "Educação",
+    "follow": "Seguir",
+    "following": "Seguindo",
+    "games": "Jogos",
+    "like": "Curtir",
+    "like_plural": "Curtidas",
+    "recommended": "Recomendado",
+    "recommended_plural": "Recomendados",
+    "report": "Reportar",
+    "science": "Ciência",
+    "share": "Compartilhar",
+    "sports": "Esportes",
+    "unknown": "Desconhecida",
+    "vlogs": "Vlogs"
+  },
+  "time": {
+    "ago": "há {{time}}",
+    "day": "{{count}} dia",
+    "day_plural": "{{count}} dias",
+    "hour": "{{count}} hora",
+    "hour_plural": "{{count}} horas",
+    "minute": "{{count}} minuto",
+    "minute_plural": "{{count}} minutos",
+    "month": "{{count}} mês",
+    "month_plural": "{{count}} meses",
+    "second": "{{count}} segundo",
+    "second_plural": "{{count}} segundos",
+    "week": "{{count}} semana",
+    "week_plural": "{{count}} semanas",
+    "year": "{{count}} ano",
+    "year_plural": "{{count}} anos"
+  }
+}

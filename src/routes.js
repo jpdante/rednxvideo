@@ -1,10 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { isAuthenticated } from "./services/auth";
 
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import Watch from "./pages/Watch";
 import Category from "./pages/Category";
@@ -12,7 +10,7 @@ import Category from "./pages/Category";
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={props =>
+    render={(props) =>
       isAuthenticated() ? (
         <Component {...props} />
       ) : (
@@ -24,14 +22,14 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 const Routes = () => (
   <BrowserRouter>
-    <Switch>
-      <Route exact path="/signin" component={SignIn} />
-      <Route path="/signup" component={SignUp} />
-      <Route path="/watch" component={Watch} />
-      <Route path="/category" component={Category} />
-      <Route path="/" component={Home} />
-      <Route path="*" component={() => <h1>Page not found</h1>} />
-    </Switch>
+    <Suspense fallback="loading">
+      <Switch>
+        <Route path="/watch/:id" component={Watch} />
+        <Route path="/category/:category" component={Category} />
+        <Route path="/" component={Home} />
+        <Route path="*" component={() => <h1>Page not found</h1>} />
+      </Switch>
+    </Suspense>
   </BrowserRouter>
 );
 

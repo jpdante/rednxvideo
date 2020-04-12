@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import $ from "jquery";
 import { login } from "../../services/auth";
 
@@ -24,6 +25,7 @@ class LoginModal extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div
         className="modal fade"
@@ -45,7 +47,6 @@ class LoginModal extends Component {
               </button>
               <h4
                 className="modal-title text-center w-100"
-                id="exampleModalCenterTitle"
               >
                 <span style={{ color: "#B10003" }}>Red</span>NX
               </h4>
@@ -57,7 +58,7 @@ class LoginModal extends Component {
                       role="button"
                       onClick={this.handleLoginButton}
                     >
-                      Login
+                      {t("components.navbar.login")}
                     </a>
                     <hr />
                   </div>
@@ -69,7 +70,7 @@ class LoginModal extends Component {
                       role="button"
                       onClick={this.handleRegisterButton}
                     >
-                      Registrar
+                      {t("components.navbar.register")}
                     </a>
                     <hr />
                   </div>
@@ -83,34 +84,32 @@ class LoginModal extends Component {
               </div>
               <form className={styles.form}>
                 <div className="form-group">
-                  <label>Usuário</label>
+                  <label>{t("modals.username")}</label>
                   <input
                     type="email"
                     className="form-control"
-                    id="exampleInputEmail1"
                     aria-describedby="emailHelp"
-                    placeholder="Usuário ou Email"
+                    placeholder={t("modals.usernameOrEmail")}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Senha</label>
+                  <label>{t("modals.password")}</label>
                   <input
                     type="password"
                     className="form-control"
-                    id="exampleInputPassword1"
-                    placeholder="Senha"
+                    placeholder={t("modals.password")}
                   />
-                  <small id="emailHelp" className="form-text text-muted">
-                    A senha precisa ter no mínimo 8 caracteres
+                  <small className="form-text text-muted">
+                  {t("modals.passwordMinLength")}
                   </small>
                 </div>
                 <div className="form-group">
                   <a className="form-check-label" href="#">
-                    Esqueceu a sua senha ?
+                  {t("modals.forgotPassword")}
                   </a>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block" onClick={this.login}>
-                  Entrar
+                {t("components.navbar.login")}
                 </button>
               </form>
               <hr />
@@ -122,4 +121,4 @@ class LoginModal extends Component {
   }
 }
 
-export default LoginModal;
+export default withTranslation()(LoginModal);;

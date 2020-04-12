@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
+import { numberToText, timeToText } from "../../library/numberText";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -6,6 +8,15 @@ import styles from "./nextvideo.module.scss";
 
 class NextVideo extends Component {
   render() {
+    const { t } = this.props;
+    const getViews = () => {
+      var number = Math.floor(Math.random() * 2000000);
+      var countText = numberToText(number);
+      return t("components.thumbnail.view", {
+        count: number,
+        countText: countText,
+      });
+    };
     return (
       <div className={`${styles.videoThumb} col-12`}>
         <div className={`no-gutters row`}>
@@ -33,15 +44,15 @@ class NextVideo extends Component {
           </div>
           <div className="col-6">
             <div className={styles.videoInfo}>
-              <div className={styles.videoFooter}>
-                <p className={styles.videoTitle}>
-                  Este é o titulo do video hsahdajsd sim eu sou gay
-                </p>
-                <div className={styles.channelName}>
-                  <a href="/">Nome do Canal</a>
-                </div>
-                <div className={styles.videoViews}>50 mi visualizações</div>
-                <div className={styles.videoDate}>há 50 dias</div>
+              <p className={styles.videoTitle}>
+                Este é o titulo do video hsahdajsd sim eu sou gay
+              </p>
+              <div className={styles.channelName}>
+                <a href="/">Nome do Canal</a>
+              </div>
+              <div className={styles.videoViews}>{getViews()}</div>
+              <div className={styles.videoDate}>
+                {t("time.ago", { time: timeToText(1586675305) })}
               </div>
             </div>
           </div>
@@ -51,4 +62,4 @@ class NextVideo extends Component {
   }
 }
 
-export default NextVideo;
+export default withTranslation()(NextVideo);

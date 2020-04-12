@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 import { isAuthenticated } from "../../services/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,23 +9,25 @@ import styles from "./sidebar.module.scss";
 
 class SideBar extends Component {
   state = {
-    isAuthenticated: isAuthenticated()
+    isAuthenticated: isAuthenticated(),
   };
 
   render() {
+    const { t } = this.props;
     return (
       <div className={`${styles.sideBar}`}>
         <div id="main-nav">
           <nav className={`${styles.navVertical} nav flex-column`}>
             <li className={`${styles.navTable}`}>
               <a className={`${styles.navLink} nav-link disabled`} href="/">
-                <FontAwesomeIcon icon="fire" className={styles.icon} /> Em Alta
+                <FontAwesomeIcon icon="fire" className={styles.icon} />{" "}
+                {t("components.navbar.hot")}
               </a>
             </li>
             <li className={`${styles.navTable}`}>
               <a className={`${styles.navLink} nav-link disabled`} href="/">
                 <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />{" "}
-                Recomendados
+                {t("shared.recommended", { count: 2 })}
               </a>
             </li>
             <li className={`${styles.navTable}`}>
@@ -33,21 +36,29 @@ class SideBar extends Component {
                   icon="satellite-dish"
                   className={styles.icon}
                 />{" "}
-                Ao Vivo
+                {t("components.navbar.live")}
               </a>
             </li>
-            <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link disabled`} href="/" alt="Desativado">
-                <FontAwesomeIcon icon="heart" className={styles.icon} />{" "}
-                Seguindo
-              </a>
-            </li>
-            <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link disabled`} href="/">
-                <FontAwesomeIcon icon="history" className={styles.icon} />{" "}
-                Historico
-              </a>
-            </li>
+            {this.state.isAuthenticated && (
+              <li className={`${styles.navTable}`}>
+                <a
+                  className={`${styles.navLink} nav-link disabled`}
+                  href="/"
+                  alt="Desativado"
+                >
+                  <FontAwesomeIcon icon="heart" className={styles.icon} />{" "}
+                  {t("components.navbar.following")}
+                </a>
+              </li>
+            )}
+            {this.state.isAuthenticated && (
+              <li className={`${styles.navTable}`}>
+                <a className={`${styles.navLink} nav-link disabled`} href="/">
+                  <FontAwesomeIcon icon="history" className={styles.icon} />{" "}
+                  {t("components.navbar.history")}
+                </a>
+              </li>
+            )}
           </nav>
         </div>
         <div
@@ -56,7 +67,7 @@ class SideBar extends Component {
         >
           <hr />
           <nav className={`${styles.navVertical} nav flex-column`}>
-            <p>Seguindo</p>
+            <p>{t("components.navbar.following")}</p>
             <li className={`${styles.navTable}`}>
               <a className={`${styles.navLink} nav-link`} href="/">
                 <div className="float-left">
@@ -126,41 +137,59 @@ class SideBar extends Component {
         </div>
         <hr />
         <nav className={`${styles.navVertical} nav flex-column`}>
-          <p>Categorias</p>
+          <p>{t("shared.category", { count: 2 })}</p>
           <li className={`${styles.navTable}`}>
-            <Link className={`${styles.navLink} nav-link`} to="/category?c=science">
+            <Link
+              className={`${styles.navLink} nav-link`}
+              to="/category?c=science"
+            >
               <FontAwesomeIcon icon="vial" className={styles.icon} />
-              Ciência e Tecnologia
+              {t("shared.science")}
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link className={`${styles.navLink} nav-link`} to="/category?c=comedy">
+            <Link
+              className={`${styles.navLink} nav-link`}
+              to="/category?c=comedy"
+            >
               <FontAwesomeIcon icon="theater-masks" className={styles.icon} />
-              Comédia
+              {t("shared.comedy")}
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link className={`${styles.navLink} nav-link`} to="/category?c=games">
+            <Link
+              className={`${styles.navLink} nav-link`}
+              to="/category?c=games"
+            >
               <FontAwesomeIcon icon="gamepad" className={styles.icon} />
-              Jogos
+              {t("shared.games")}
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link className={`${styles.navLink} nav-link`} to="/category?c=vlog">
+            <Link
+              className={`${styles.navLink} nav-link`}
+              to="/category?c=vlog"
+            >
               <FontAwesomeIcon icon="camera" className={styles.icon} />
-              Vlogs
+              {t("shared.vlogs")}
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link className={`${styles.navLink} nav-link`} to="/category?c=sports">
+            <Link
+              className={`${styles.navLink} nav-link`}
+              to="/category?c=sports"
+            >
               <FontAwesomeIcon icon="futbol" className={styles.icon} />
-              Esportes
+              {t("shared.sports")}
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link className={`${styles.navLink} nav-link`} to="/category?c=education">
+            <Link
+              className={`${styles.navLink} nav-link`}
+              to="/category?c=education"
+            >
               <FontAwesomeIcon icon="graduation-cap" className={styles.icon} />
-              Educação
+              {t("shared.education")}
             </Link>
           </li>
         </nav>
@@ -169,4 +198,4 @@ class SideBar extends Component {
   }
 }
 
-export default SideBar;
+export default withTranslation()(SideBar);

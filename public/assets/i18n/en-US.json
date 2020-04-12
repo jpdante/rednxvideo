@@ -1,0 +1,97 @@
+{
+  "components": {
+    "navbar": {
+      "discover": "Discover",
+      "following": "Following",
+      "history": "History",
+      "home": "Home",
+      "hot": "Hot",
+      "live": "Live",
+      "login": "Login",
+      "logout": "Logout",
+      "register": "Register",
+      "search": "Search"
+    },
+    "thumbnail": {
+      "view": "{{countText}} view",
+      "view_plural": "{{countText}} views"
+    }
+  },
+  "modals": {
+    "alreadyHasAccount": "Already have an account?",
+    "birthDate": "Date of Birth",
+    "confirmPassword": "Confirm Password",
+    "email": "Email",
+    "forgotPassword": "Forgot your password ?",
+    "password": "Password",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "username": "Username",
+    "usernameOrEmail": "Username or Email"
+  },
+  "numbers": {
+    "billion": "{{count}} billion",
+    "billionMinify": "{{count}}B",
+    "billion_plural": "{{count}} billion",
+    "million": "{{count}} million",
+    "millionMinify": "{{count}}M",
+    "million_plural": "{{count}} million",
+    "thousand": "{{count}}K",
+    "thousandMinify": "{{count}}K",
+    "thousand_plural": "{{count}} thousand"
+  },
+  "pages": {
+    "home": {
+      "followed": "Followed channels",
+      "videosai": "Videos we think you'll like"
+    },
+    "watch": {
+      "commentPlaceHolder": "Type a nice comment here and press the ENTER key to send it",
+      "followers": "{{countText}} followers",
+      "hideDescription": "Hide Description",
+      "needLogin": {
+        "toLogin": "to log in",
+        "toSend": "to post a comment",
+        "youNeed": "You need"
+      },
+      "showDescription": "Show Description"
+    }
+  },
+  "shared": {
+    "category": "Category",
+    "category_plural": "Categories",
+    "comedy": "Comedy",
+    "dislike": "Dislike",
+    "dislike_plural": "Dislikes",
+    "education": "Education",
+    "follow": "Follow",
+    "following": "Following",
+    "games": "Games",
+    "like": "Like",
+    "like_plural": "Likes",
+    "recommended": "Recommended",
+    "recommended_plural": "Recommended",
+    "report": "Report",
+    "science": "Science",
+    "share": "Share",
+    "sports": "Sports",
+    "unknown": "Unknown",
+    "vlogs": "Vlogs"
+  },
+  "time": {
+    "ago": "{{time}} ago",
+    "day": "{{count}} day",
+    "day_plural": "{{count}} days",
+    "hour": "{{count}} hour",
+    "hour_plural": "{{count}} hours",
+    "minute": "{{count}} minute",
+    "minute_plural": "{{count}} minutes",
+    "month": "{{count}} month",
+    "month_plural": "{{count}} months",
+    "second": "{{count}} second",
+    "second_plural": "{{count}} seconds",
+    "week": "{{count}} week",
+    "week_plural": "{{count}} weeks",
+    "year": "{{count}} year",
+    "year_plural": "{{count}} years"
+  }
+}

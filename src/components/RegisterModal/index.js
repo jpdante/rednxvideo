@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 import $ from "jquery";
 
 import styles from "./registermodal.module.scss";
@@ -16,6 +17,7 @@ class RegisterModal extends Component {
   }
 
   render() {
+    const { t } = this.props;
     return (
       <div
         className="modal fade"
@@ -35,10 +37,7 @@ class RegisterModal extends Component {
               >
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h4
-                className="modal-title text-center w-100"
-                id="exampleModalCenterTitle"
-              >
+              <h4 className="modal-title text-center w-100">
                 <span style={{ color: "#B10003" }}>Red</span>NX
               </h4>
               <div className={`${styles.bar}`}>
@@ -49,7 +48,7 @@ class RegisterModal extends Component {
                       role="button"
                       onClick={this.handleLoginButton}
                     >
-                      Login
+                      {t("components.navbar.login")}
                     </a>
                     <hr />
                   </div>
@@ -61,60 +60,54 @@ class RegisterModal extends Component {
                       role="button"
                       onClick={this.handleRegisterButton}
                     >
-                      Registrar
+                      {t("components.navbar.register")}
                     </a>
                     <hr />
                   </div>
-                  <div
-                    className={`${styles.button} float-none`}
-                  >
-                    &nbsp;
-                  </div>
+                  <div className={`${styles.button} float-none`}>&nbsp;</div>
                 </div>
                 <hr />
               </div>
               <form className={styles.form}>
                 <div className="form-group">
-                  <label>Usuário</label>
+                  <label>{t("modals.username")}</label>
                   <input
                     type="username"
                     className="form-control"
                     aria-describedby="emailHelp"
-                    placeholder="Usuário"
+                    placeholder={t("modals.username")}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Email</label>
+                  <label>{t("modals.email")}</label>
                   <input
                     type="email"
                     className="form-control"
-                    placeholder="email"
+                    placeholder={t("modals.email")}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Senha</label>
+                  <label>{t("modals.password")}</label>
                   <input
                     type="password"
                     className="form-control"
-                    placeholder="Senha"
+                    placeholder={t("modals.password")}
                     aria-describedby="passwordHelp"
                   />
-                  <small id="passwordHelp" className="form-text text-muted">
-                    A senha precisa ter no mínimo 8 caracteres
+                  <small className="form-text text-muted">
+                    {t("modals.passwordMinLength")}
                   </small>
                 </div>
                 <div className="form-group">
-                  <label>
-                    Confirmação de Senha
-                  </label>
+                  <label>{t("modals.confirmPassword")}</label>
                   <input
                     type="password"
                     className="form-control"
-                    placeholder="Senha"
+                    placeholder={t("modals.password")}
                   />
                 </div>
                 <div className="form-group">
-                  <label>Data de Nascimento</label>
+                  <label>{t("modals.birthDate")}</label>
                   <input
                     type="text"
                     className="form-control"
@@ -123,11 +116,11 @@ class RegisterModal extends Component {
                 </div>
                 <div className="form-group">
                   <a className="form-check-label" href="#">
-                    Já possui uma conta ?
+                    {t("modals.alreadyHasAccount")}
                   </a>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">
-                  Cadastrar-se
+                  {t("components.navbar.register")}
                 </button>
               </form>
               <hr />
@@ -139,4 +132,4 @@ class RegisterModal extends Component {
   }
 }
 
-export default RegisterModal;
+export default withTranslation()(RegisterModal);

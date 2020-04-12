@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
+import { withTranslation } from "react-i18next";
 
 import NavBar from "../../components/NavBar";
 import SideBar from "../../components/SideBar";
@@ -10,6 +11,7 @@ import styles from "./home.module.scss";
 
 class Home extends Component {
   render() {
+    const { t } = this.props;
     return (
       <div className="fix-heigth">
         <NavBar />
@@ -17,7 +19,7 @@ class Home extends Component {
           <SideBar />
           <div className={`${styles.homeContent}`}>
             <div className={styles.listMargin}>
-              <h5>Vídeos que achamos que vai gostar</h5>
+              <h5>{t('pages.home.videosai')}</h5>
               <hr />
               <div className="row">
                 <VideoThumb />
@@ -27,7 +29,7 @@ class Home extends Component {
               </div>
             </div>
             <div className={styles.listMargin}>
-              <h5>Recomendados</h5>
+              <h5>{t('shared.recommended', {count: 2})}</h5>
               <hr />
               <div className="row">
                 <VideoThumb />
@@ -37,7 +39,7 @@ class Home extends Component {
               </div>
             </div>
             <div className={styles.listMargin}>
-              <h5>Canais seguidos</h5>
+              <h5>{t('pages.home.followed')}</h5>
               <hr />
               <div className="row">
                 <VideoThumb />
@@ -54,4 +56,4 @@ class Home extends Component {
   }
 }
 
-export default withRouter(Home);
+export default withRouter(withTranslation()(Home));

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { withTranslation } from "react-i18next";
 
 import { isAuthenticated, login, logout } from "../../services/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -8,10 +9,10 @@ import styles from "./navbar.module.scss";
 
 class NavBar extends Component {
   state = {
-    isAuthenticated: isAuthenticated()
+    isAuthenticated: isAuthenticated(),
   };
 
-  logout = async e => {
+  logout = async (e) => {
     e.preventDefault();
     logout();
     this.setState({ isAuthenticated: false });
@@ -19,6 +20,7 @@ class NavBar extends Component {
   };
 
   render() {
+    const { t } = this.props;
     return (
       <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`}>
         <a className={`navbar-brand float-left`} href="/">
@@ -60,13 +62,14 @@ class NavBar extends Component {
           <ul className="navbar-nav mt-lg-0 float-none">
             <li className={`${styles.navbarButton} nav-item active`}>
               <a className="nav-link text-center" href="/">
-                Inicio <span className="sr-only">(current)</span>
+                {t("components.navbar.home")}{" "}
+                <span className="sr-only">(current)</span>
               </a>
               <div className={styles.navbarSelectedLine}></div>
             </li>
             <li className="nav-item">
               <a className="nav-link text-center" href="/">
-                Descobrir
+                {t("components.navbar.discover")}
               </a>
             </li>
             <li className="nav-item">
@@ -86,7 +89,7 @@ class NavBar extends Component {
                 data-toggle="modal"
                 data-target="#loginModal"
               >
-                Login
+                {t("components.navbar.login")}
               </a>
             </li>
             <li className="nav-item">
@@ -97,7 +100,7 @@ class NavBar extends Component {
                 data-toggle="modal"
                 data-target="#registerModal"
               >
-                Registrar
+                {t("components.navbar.register")}
               </a>
             </li>
           </ul>
@@ -106,13 +109,14 @@ class NavBar extends Component {
           <ul className="navbar-nav mt-lg-0 float-none">
             <li className={`${styles.navbarButton} nav-item active`}>
               <a className="nav-link text-center" href="/">
-                Inicio <span className="sr-only">(current)</span>
+                {t("components.navbar.home")}{" "}
+                <span className="sr-only">(current)</span>
               </a>
               <div className={styles.navbarSelectedLine}></div>
             </li>
             <li className="nav-item">
               <a className="nav-link text-center" href="/">
-                Descobrir
+                {t("components.navbar.discover")}
               </a>
             </li>
             <li className="nav-item">
@@ -133,8 +137,8 @@ class NavBar extends Component {
             <input
               type="text"
               className="form-control"
-              placeholder="Search"
-              aria-label="Search"
+              placeholder={t("components.navbar.search")}
+              aria-label={t("components.navbar.search")}
               aria-describedby="basic-addon2"
             />
             <div className="input-group-append">
@@ -157,7 +161,7 @@ class NavBar extends Component {
                 data-toggle="modal"
                 data-target="#loginModal"
               >
-                Login
+                {t("components.navbar.login")}
               </button>
               <button
                 className={`btn btn-sm btn-primary mx-1`}
@@ -165,7 +169,7 @@ class NavBar extends Component {
                 data-toggle="modal"
                 data-target="#registerModal"
               >
-                Registrar
+                {t("components.navbar.register")}
               </button>
             </form>
             <li
@@ -200,12 +204,8 @@ class NavBar extends Component {
                 <a className="dropdown-item" href="/">
                   ... ?
                 </a>
-                <a
-                  className="dropdown-item"
-                  href="/"
-                  onClick={this.logout}
-                >
-                  Logout
+                <a className="dropdown-item" href="/" onClick={this.logout}>
+                  {t("components.navbar.logout")}
                 </a>
               </div>
             </li>
@@ -216,4 +216,4 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+export default withTranslation()(NavBar);
