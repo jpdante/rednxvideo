@@ -1,7 +1,7 @@
 // -- Body --
 
-$bg-dark: #282A2C;
-$body-bg: #282A2C;
+$bg-dark: #282a2c;
+$body-bg: #282a2c;
 $body-color: #c9d2db;
 
 // -- Navbar --
@@ -38,26 +38,40 @@ html,
   min-width: 768px;
 }
 
-.fix-heigth {
+.content {
   height: 100%;
+  padding-top: 56px;
 }
 
-.sidebar-wrapper {
+.wrapper {
   display: flex;
   width: 100%;
   height: calc(100% - 56px);
 }
 
 .page-content {
-  width: 100%;
-  min-height: calc(100% - 56px);
+  padding: 0px 60px 20px 60px;
+  width: calc(100% - 100px);
+  margin-left: 240px;
   transition: all 0.3s;
-  top: 0;
-  right: 0;
 }
 
-.page-content.active {
-  width: 100%;
+@media (max-width: 768px) {
+  .page-content {
+    padding: 0px 10px 20px 10px;
+  }
+}
+
+@media (max-width: 1068px) and (min-width: 768px) {
+  .page-content {
+    padding: 0px 30px 20px 30px;
+  }
+}
+
+@media (max-width: 1668px) and (min-width: 1068px) {
+  .page-content {
+    padding: 0px 40px 20px 40px;
+  }
 }
 
 .col-md-3 {
@@ -78,3 +92,40 @@ html,
 .disabled {
   color: #636363 !important;
 }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  //border: solid 3px transparent;
+  border-radius: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  box-shadow: inset 0 0 10px 10px rgba(255, 255, 255, 0.15);
+  border: solid 2px transparent;
+  border-radius: 5px;
+}
+
+/*::-webkit-scrollbar-track {
+  padding: 6px !important;
+  background-color: rgba(0, 0, 0, 0.0);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar {
+  padding: 6px !important;
+  width: 6px;
+  background-color: rgba(0, 0, 0, 0.0);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(70, 70, 70, 0.576);
+  border-radius: 3px;
+  margin-right: 5px !important;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(117, 117, 117, 0.576);
+}*/

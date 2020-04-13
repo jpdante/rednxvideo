@@ -40,6 +40,9 @@
     "thousand_plural": "{{count}} mil"
   },
   "pages": {
+    "discover": {
+      "title": "Descobrir"
+    },
     "home": {
       "followed": "Canais seguidos",
       "videosai": "Vídeos que achamos que vai gostar"

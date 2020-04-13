@@ -23,7 +23,7 @@ class NavBar extends Component {
   render() {
     const { t } = this.props;
     return (
-      <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`}>
+      <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark fixed-top`}>
         <Link className={`navbar-brand float-left`} to="/">
           <span style={{ color: "#B10003" }}> Red</span>NX
         </Link>
@@ -39,15 +39,15 @@ class NavBar extends Component {
               aria-describedby="basic-addon2"
             />
             <div className="input-group-append">
-              <button type="button" className="btn btn-outline-secondary">
+              <button type="button" className={`btn btn-outline-secondary ${styles.searchIcon}`}>
                 <FontAwesomeIcon icon="search" aria-hidden="true" />
               </button>
               <button
                 className="btn btn-outline-secondary"
                 type="button"
                 data-toggle="collapse"
-                data-target="#navbarTogglerDemo03"
-                aria-controls="navbarTogglerDemo03"
+                data-target="#mainNavbar"
+                aria-controls="mainNavbar"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
               >
@@ -58,7 +58,7 @@ class NavBar extends Component {
         </div>
         <div
           className={`collapse navbar-collapse ${styles.navbarMobile}`}
-          id="navbarTogglerDemo03"
+          id="mainNavbar"
         >
           <ul className="navbar-nav mt-lg-0 float-none">
             <li className={`${styles.navbarButton} nav-item active`}>

@@ -106,11 +106,11 @@ class Watch extends Component {
   render() {
     const { t } = this.props;
     return (
-      <div className="fix-heigth">
+      <div className="content">
         <NavBar />
-        <div className="sidebar-wrapper">
+        <div className="wrapper">
           <SideBar />
-          <div className={`${styles.watchContent}`}>
+          <div className="page-content">
             <div className={`${styles.container} row`}>
               <div
                 className={`${styles.playerContainer} col-sm-12 col-md-12 col-lg-12 col-xl-9`}

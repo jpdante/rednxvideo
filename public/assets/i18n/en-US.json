@@ -40,6 +40,9 @@
     "thousand_plural": "{{count}} thousand"
   },
   "pages": {
+    "discover": {
+      "title": "Discover"
+    },
     "home": {
       "followed": "Followed channels",
       "videosai": "Videos we think you'll like"

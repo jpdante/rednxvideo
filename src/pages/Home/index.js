@@ -13,11 +13,11 @@ class Home extends Component {
   render() {
     const { t } = this.props;
     return (
-      <div className="fix-heigth">
+      <div className="content">
         <NavBar />
-        <div className="sidebar-wrapper">
+        <div className="wrapper">
           <SideBar />
-          <div className={`${styles.homeContent}`}>
+          <div className="page-content">
             <div className={styles.listMargin}>
               <h5>{t('pages.home.videosai')}</h5>
               <hr />

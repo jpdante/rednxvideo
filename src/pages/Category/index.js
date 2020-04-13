@@ -45,11 +45,11 @@ class Category extends Component {
 
   render() {
     return (
-      <div className="fix-heigth">
+      <div className="content">
         <NavBar />
-        <div className="sidebar-wrapper">
+        <div className="wrapper">
           <SideBar />
-          <div className={`${styles.categoryContent}`}>
+          <div className="page-content">
             <div className={styles.listMargin}>
               <h5>Categoria {this.state.category}</h5>
               <hr />
