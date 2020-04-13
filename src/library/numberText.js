@@ -2,11 +2,11 @@ import i18n from 'i18next';
 
 export const numberToText = (views) => {
   if (views > 999_999_999) {
-    return i18n.t("numbers.billionMinify", { count: Math.floor(views / 1_000_000_000) })
+    return i18n.t("numbers.billionMinify", { count: (views / 1_000_000_000).toFixed(1) })
   } else if (views > 999_999) {
-    return i18n.t("numbers.millionMinify", { count: Math.floor(views / 1_000_000) });
+    return i18n.t("numbers.millionMinify", { count: (views / 1_000_000).toFixed(1) });
   } else if (views > 999) {
-    return i18n.t("numbers.thousandMinify", { count: Math.floor(views / 1_000) })
+    return i18n.t("numbers.thousandMinify", { count: (views / 1_000).toFixed(1) })
   } else {
     return views.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");;
   }
@@ -30,7 +30,6 @@ export const timeToText = (unix_timestamp) =>  {
   if (interval >= 1) {
     return i18n.t('time.day', { count: interval });
   }
-  console.error(seconds);
   interval = Math.floor(seconds / 3600);
   if (interval >= 1) {
     return i18n.t('time.hour', { count: interval });

@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
 import { isAuthenticated, login, logout } from "../../services/auth";
@@ -23,9 +24,9 @@ class NavBar extends Component {
     const { t } = this.props;
     return (
       <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark`}>
-        <a className={`navbar-brand float-left`} href="/">
+        <Link className={`navbar-brand float-left`} to="/">
           <span style={{ color: "#B10003" }}> Red</span>NX
-        </a>
+        </Link>
         <div className={`${styles.navbarMobile} col`}>
           <div
             className={`${styles.searchBar} input-group mx-auto form-inline`}
@@ -61,16 +62,16 @@ class NavBar extends Component {
         >
           <ul className="navbar-nav mt-lg-0 float-none">
             <li className={`${styles.navbarButton} nav-item active`}>
-              <a className="nav-link text-center" href="/">
+              <Link className="nav-link text-center" to="/">
                 {t("components.navbar.home")}{" "}
                 <span className="sr-only">(current)</span>
-              </a>
+              </Link>
               <div className={styles.navbarSelectedLine}></div>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-center" href="/">
+              <Link className="nav-link text-center" to="/discover">
                 {t("components.navbar.discover")}
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a
@@ -108,16 +109,16 @@ class NavBar extends Component {
         <div className={`${styles.navbarDesktop} col`}>
           <ul className="navbar-nav mt-lg-0 float-none">
             <li className={`${styles.navbarButton} nav-item active`}>
-              <a className="nav-link text-center" href="/">
+              <Link className="nav-link text-center" to="/">
                 {t("components.navbar.home")}{" "}
                 <span className="sr-only">(current)</span>
-              </a>
+              </Link>
               <div className={styles.navbarSelectedLine}></div>
             </li>
             <li className="nav-item">
-              <a className="nav-link text-center" href="/">
+              <Link className="nav-link text-center" to="/discover">
                 {t("components.navbar.discover")}
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a

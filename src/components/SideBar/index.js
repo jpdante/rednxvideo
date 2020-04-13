@@ -141,7 +141,7 @@ class SideBar extends Component {
           <li className={`${styles.navTable}`}>
             <Link
               className={`${styles.navLink} nav-link`}
-              to="/category?c=science"
+              to="/category/science"
             >
               <FontAwesomeIcon icon="vial" className={styles.icon} />
               {t("shared.science")}
@@ -150,7 +150,7 @@ class SideBar extends Component {
           <li className={`${styles.navTable}`}>
             <Link
               className={`${styles.navLink} nav-link`}
-              to="/category?c=comedy"
+              to="/category/comedy"
             >
               <FontAwesomeIcon icon="theater-masks" className={styles.icon} />
               {t("shared.comedy")}
@@ -159,7 +159,7 @@ class SideBar extends Component {
           <li className={`${styles.navTable}`}>
             <Link
               className={`${styles.navLink} nav-link`}
-              to="/category?c=games"
+              to="/category/games"
             >
               <FontAwesomeIcon icon="gamepad" className={styles.icon} />
               {t("shared.games")}
@@ -168,7 +168,7 @@ class SideBar extends Component {
           <li className={`${styles.navTable}`}>
             <Link
               className={`${styles.navLink} nav-link`}
-              to="/category?c=vlog"
+              to="/category/vlog"
             >
               <FontAwesomeIcon icon="camera" className={styles.icon} />
               {t("shared.vlogs")}
@@ -177,7 +177,7 @@ class SideBar extends Component {
           <li className={`${styles.navTable}`}>
             <Link
               className={`${styles.navLink} nav-link`}
-              to="/category?c=sports"
+              to="/category/sports"
             >
               <FontAwesomeIcon icon="futbol" className={styles.icon} />
               {t("shared.sports")}
@@ -186,7 +186,7 @@ class SideBar extends Component {
           <li className={`${styles.navTable}`}>
             <Link
               className={`${styles.navLink} nav-link`}
-              to="/category?c=education"
+              to="/category/education"
             >
               <FontAwesomeIcon icon="graduation-cap" className={styles.icon} />
               {t("shared.education")}

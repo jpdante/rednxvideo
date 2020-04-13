@@ -4,8 +4,10 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from "./services/auth";
 
 import Home from "./pages/Home";
+import Discover from "./pages/Discover";
 import Watch from "./pages/Watch";
 import Category from "./pages/Category";
+import Channel from "./pages/Channel";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -26,6 +28,8 @@ const Routes = () => (
       <Switch>
         <Route path="/watch/:id" component={Watch} />
         <Route path="/category/:category" component={Category} />
+        <Route path="/channel/:channel" component={Channel} />
+        <Route path="/discover" component={Discover} />
         <Route path="/" component={Home} />
         <Route path="*" component={() => <h1>Page not found</h1>} />
       </Switch>
