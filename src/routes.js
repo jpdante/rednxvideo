@@ -8,6 +8,11 @@ import Discover from "./pages/Discover";
 import Watch from "./pages/Watch";
 import Category from "./pages/Category";
 import Channel from "./pages/Channel";
+import Hot from "./pages/Hot";
+import Live from "./pages/Live";
+import Recommended from "./pages/Recommended";
+import History from "./pages/History";
+import Following from "./pages/Following";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -26,11 +31,16 @@ const Routes = () => (
   <BrowserRouter>
     <Suspense fallback="loading">
       <Switch>
+        <Route path="/" exact component={Home} />
         <Route path="/watch/:id" component={Watch} />
         <Route path="/category/:category" component={Category} />
         <Route path="/channel/:channel" component={Channel} />
         <Route path="/discover" component={Discover} />
-        <Route path="/" component={Home} />
+        <Route path="/hot" component={Hot} />
+        <Route path="/live" component={Live} />
+        <Route path="/recommended" component={Recommended} />
+        <Route path="/history" component={History} />
+        <Route path="/following" component={Following} />
         <Route path="*" component={() => <h1>Page not found</h1>} />
       </Switch>
     </Suspense>

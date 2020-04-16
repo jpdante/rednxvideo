@@ -19,44 +19,44 @@ class SideBar extends Component {
         <div id="main-nav">
           <nav className={`${styles.navVertical} nav flex-column`}>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link disabled`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/hot">
                 <FontAwesomeIcon icon="fire" className={styles.icon} />{" "}
                 {t("components.navbar.hot")}
-              </a>
+              </Link>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link disabled`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/recommended">
                 <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />{" "}
                 {t("shared.recommended", { count: 2 })}
-              </a>
+              </Link>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link disabled`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/live">
                 <FontAwesomeIcon
                   icon="satellite-dish"
                   className={styles.icon}
                 />{" "}
                 {t("components.navbar.live")}
-              </a>
+              </Link>
             </li>
             {this.state.isAuthenticated && (
               <li className={`${styles.navTable}`}>
-                <a
-                  className={`${styles.navLink} nav-link disabled`}
-                  href="/"
+                <Link
+                  className={`${styles.navLink} nav-link`}
+                  to="/following"
                   alt="Desativado"
                 >
                   <FontAwesomeIcon icon="heart" className={styles.icon} />{" "}
                   {t("components.navbar.following")}
-                </a>
+                </Link>
               </li>
             )}
             {this.state.isAuthenticated && (
               <li className={`${styles.navTable}`}>
-                <a className={`${styles.navLink} nav-link disabled`} href="/">
+                <Link className={`${styles.navLink} nav-link`} to="/history">
                   <FontAwesomeIcon icon="history" className={styles.icon} />{" "}
                   {t("components.navbar.history")}
-                </a>
+                </Link>
               </li>
             )}
           </nav>
@@ -69,7 +69,7 @@ class SideBar extends Component {
           <nav className={`${styles.navVertical} nav flex-column`}>
             <p>{t("components.navbar.following")}</p>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/channel/pentagramasg">
                 <div className="float-left">
                   <img
                     src="https://yt3.ggpht.com/a/AATXAJyVzvS5VwifcSWwYzMSjz0SjtKCNuQ3cjcQ7Q=s288-c-k-c0xffffffff-no-rj-mo"
@@ -83,10 +83,10 @@ class SideBar extends Component {
                 <div className="float-right">
                   <span className="badge badge-primary">3</span>
                 </div>
-              </a>
+              </Link>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/channel/mikagamer">
                 <div className="float-left">
                   <img
                     src="https://yt3.ggpht.com/a/AATXAJxyFPzS26mEMneX4cFmE11hm2sbc9s7GOyM5g=s288-c-k-c0xffffffff-no-rj-mo"
@@ -100,10 +100,10 @@ class SideBar extends Component {
                 <div className="float-right">
                   <span className="badge badge-primary">5</span>
                 </div>
-              </a>
+              </Link>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/channel/ellisiumx">
                 <div className="float-left">
                   <img
                     src="https://yt3.ggpht.com/-sNHMsBMptyM/AAAAAAAAAAI/AAAAAAAAAAA/vsaEYt0DpQI/s108-c-k-c0x00ffffff-no-rj-mo/photo.jpg"
@@ -114,10 +114,10 @@ class SideBar extends Component {
                   />
                   Ellisiumx
                 </div>
-              </a>
+              </Link>
             </li>
             <li className={`${styles.navTable}`}>
-              <a className={`${styles.navLink} nav-link`} href="/">
+              <Link className={`${styles.navLink} nav-link`} to="/channel/caverinha">
                 <div className="float-left">
                   <img
                     src="https://yt3.ggpht.com/a/AATXAJxGOgmcqR8CvdWpCMMABdif-wvgZeeE5xIeqw=s288-c-k-c0xffffffff-no-rj-mo"
@@ -131,7 +131,7 @@ class SideBar extends Component {
                 <div className="float-right">
                   <span className="badge badge-primary">7</span>
                 </div>
-              </a>
+              </Link>
             </li>
           </nav>
         </div>
@@ -157,19 +157,13 @@ class SideBar extends Component {
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link
-              className={`${styles.navLink} nav-link`}
-              to="/category/games"
-            >
+            <Link className={`${styles.navLink} nav-link`} to="/category/games">
               <FontAwesomeIcon icon="gamepad" className={styles.icon} />
               {t("shared.games")}
             </Link>
           </li>
           <li className={`${styles.navTable}`}>
-            <Link
-              className={`${styles.navLink} nav-link`}
-              to="/category/vlog"
-            >
+            <Link className={`${styles.navLink} nav-link`} to="/category/vlog">
               <FontAwesomeIcon icon="camera" className={styles.icon} />
               {t("shared.vlogs")}
             </Link>

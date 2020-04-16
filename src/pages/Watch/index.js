@@ -110,7 +110,7 @@ class Watch extends Component {
         <NavBar />
         <div className="wrapper">
           <SideBar />
-          <div className="page-content">
+          <div className={`${styles.watchContent} page-content`}>
             <div className={`${styles.container} row`}>
               <div
                 className={`${styles.playerContainer} col-sm-12 col-md-12 col-lg-12 col-xl-9`}
@@ -135,7 +135,7 @@ class Watch extends Component {
                   </div>
                 </div>
                 <div className={styles.descriptionContainer}>
-                  <div className={`${styles.channelContainer} row`}>
+                  <div className="row">
                     <div
                       className={`${styles.channelImage} col-lg-12 col-xl-6`}
                     >

@@ -47,6 +47,12 @@
       "followed": "Canais seguidos",
       "videosai": "Vídeos que achamos que vai gostar"
     },
+    "live": {
+      "error": "Ainda não suportamos lives, mas fique tranquilo, estamos trabalhando nisso :)"
+    },
+    "recommended": {
+      "title": "Recomendados"
+    },
     "watch": {
       "commentPlaceHolder": "Digite aqui um comentário legal e pressione a tecla ENTER para enviar-lo",
       "followers": "{{countText}} seguidores",

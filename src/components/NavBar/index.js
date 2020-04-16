@@ -23,7 +23,9 @@ class NavBar extends Component {
   render() {
     const { t } = this.props;
     return (
-      <nav className={`${styles.navbar} navbar navbar-expand-lg navbar-dark fixed-top`}>
+      <nav
+        className={`${styles.navbar} navbar navbar-expand-lg navbar-dark fixed-top`}
+      >
         <Link className={`navbar-brand float-left`} to="/">
           <span style={{ color: "#B10003" }}> Red</span>NX
         </Link>
@@ -39,7 +41,10 @@ class NavBar extends Component {
               aria-describedby="basic-addon2"
             />
             <div className="input-group-append">
-              <button type="button" className={`btn btn-outline-secondary ${styles.searchIcon}`}>
+              <button
+                type="button"
+                className={`btn btn-outline-secondary ${styles.searchIcon}`}
+              >
                 <FontAwesomeIcon icon="search" aria-hidden="true" />
               </button>
               <button
@@ -72,15 +77,6 @@ class NavBar extends Component {
               <Link className="nav-link text-center" to="/discover">
                 {t("components.navbar.discover")}
               </Link>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link disabled text-center"
-                href="/"
-                aria-disabled="true"
-              >
-                Disabled
-              </a>
             </li>
             <li className="nav-item">
               <a
@@ -119,15 +115,6 @@ class NavBar extends Component {
               <Link className="nav-link text-center" to="/discover">
                 {t("components.navbar.discover")}
               </Link>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link disabled text-center"
-                href="/"
-                aria-disabled="true"
-              >
-                Disabled
-              </a>
             </li>
           </ul>
         </div>
@@ -173,6 +160,7 @@ class NavBar extends Component {
                 {t("components.navbar.register")}
               </button>
             </form>
+
             <li
               className={`${
                 this.state.isAuthenticated ? "show" : "noAuthentication"

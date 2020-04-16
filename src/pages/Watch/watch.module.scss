@@ -1,9 +1,13 @@
+.watchContent {
+  padding: 0px 25px 20px 25px !important;
+}
+
 .playerContainer {
   width: 100% !important;
 
   .videoTitleContainer {
     background-color: #2c2f31;
-    height: 66px;
+    min-height: 66px;
     border-radius: 0px 0px 10px 10px;
 
     .videoIcon {

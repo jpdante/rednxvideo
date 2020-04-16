@@ -42,7 +42,9 @@ class VideoThumb extends Component {
               </div>
             </div>
             <img
-              src="https://picsum.photos/1280/720"
+              src="/assets/thumb.png"
+              width="1280"
+              height="720"
               alt="Thumbnail do video"
               className={styles.image}
             />

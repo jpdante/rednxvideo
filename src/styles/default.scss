@@ -98,7 +98,6 @@ html,
 }
 
 ::-webkit-scrollbar-track {
-  //border: solid 3px transparent;
   border-radius: 1px;
 }
 
@@ -108,24 +107,13 @@ html,
   border-radius: 5px;
 }
 
-/*::-webkit-scrollbar-track {
-  padding: 6px !important;
-  background-color: rgba(0, 0, 0, 0.0);
-  border-radius: 3px;
+.nav-pills {
+  .nav-item {
+    .nav-link {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .active {
+      color: #ffffff !important;
+    }
+  }
 }
-
-::-webkit-scrollbar {
-  padding: 6px !important;
-  width: 6px;
-  background-color: rgba(0, 0, 0, 0.0);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: rgba(70, 70, 70, 0.576);
-  border-radius: 3px;
-  margin-right: 5px !important;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(117, 117, 117, 0.576);
-}*/
