@@ -17,7 +17,26 @@
       "view_plural": "{{countText}} visualizações"
     }
   },
+  "errors": {
+    "accountBanned": "Está conta foi banida!",
+    "accountNotActive": "O seu email não foi verificado, para reenviar o email de validação clique aqui",
+    "birthDateEmpty": "A data de nascimento não pode ficar vazia",
+    "emailAlreadyRegistered": "Este email já esta registrado.",
+    "emailNotRegistered": "Este email não esta registrado.",
+    "failedToRegister": "Ocorreu uma falha ao fazer o registro. Contate o suporte e use o ID: {{id}}",
+    "fieldsMissing": "Existem campos faltando.",
+    "incorrectPassword": "A senha está incorreta!",
+    "invalidBirthDate": "Data de Nascimento inválida!",
+    "invalidEmail": "Este email é invalido!",
+    "invalidUsername": "Este nome de usuário é invalido!",
+    "loginError": "Houve um problema ao iniciar a sessão, verifique as suas credenciais, se o problema persistir por favor contate o suporte.",
+    "passwordEmpty": "A senha não pode ficar em branco.",
+    "passwordsDontMatch": "As senhas não são iguais.",
+    "usernameAlreadyRegistered": "Este nome de usuário já esta registrado.",
+    "usernameEmpty": "O nome de usuário não pode ficar em branco."
+  },
   "modals": {
+    "accountCreated": "Conta criada! Verifique o seu email para validar a sua conta.",
     "alreadyHasAccount": "Já possui uma conta ?",
     "birthDate": "Data de Nascimento",
     "confirmPassword": "Confirmar Senha",

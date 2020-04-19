@@ -1,11 +1,34 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
+import api from "../../services/api";
 import $ from "jquery";
+import "bootstrap-datepicker/js/bootstrap-datepicker";
+import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
 
 import styles from "./registermodal.module.scss";
 
 class RegisterModal extends Component {
+  state = {
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    birthDate: "",
+    error: "",
+    success: "",
+    errorData: null,
+    loading: false
+  };
+
+  componentDidMount() {
+    $(".datepicker")
+      .datepicker()
+      .on("changeDate", (ev) => {
+        this.setState({ birthDate: ev.target.value });
+      });
+  }
+
   handleRegisterButton() {
     $("#loginModal").modal("hide");
     $("#registerModal").modal("show");
@@ -15,6 +38,68 @@ class RegisterModal extends Component {
     $("#registerModal").modal("hide");
     $("#loginModal").modal("show");
   }
+
+  handleSignUp = async (e) => {
+    e.preventDefault();
+    this.setState({
+      error: "",
+    });
+    const {
+      username,
+      email,
+      password,
+      confirmPassword,
+      birthDate,
+    } = this.state;
+    if (!username) {
+      this.setState({ error: "errors.passwordEmpty", success: "" });
+      return;
+    }
+    if (!email) {
+      this.setState({ error: "errors.emailEmpty", success: "" });
+      return;
+    }
+    if (!password) {
+      this.setState({ error: "errors.passwordEmpty", success: "" });
+      return;
+    }
+    if (!confirmPassword) {
+      this.setState({ error: "errors.confirmPasswordEmpty", success: "" });
+      return;
+    }
+    if (password !== confirmPassword) {
+      this.setState({ error: "errors.passwordsDontMatch", success: "" });
+      return;
+    }
+    if (!birthDate) {
+      this.setState({ error: "errors.birthDateEmpty", success: "" });
+      return;
+    }
+    try {
+      this.setState({ loading: true });
+      const response = await api.post("/api/register", {
+        username,
+        email,
+        password,
+        birthdate: birthDate,
+        captcha: "none",
+      });
+      this.setState({ loading: false });
+      if (response.data.success) {
+        this.setState({ error: "", success: "modals.accountCreated" });
+      } else {
+        this.setState({
+          error: response.data.message,
+          errorData: response.data,
+          success: "",
+        });
+      }
+    } catch (err) {
+      this.setState({ loading: false });
+      console.log(err);
+      this.setState({ error: "errors.loginError", success: "" });
+    }
+  };
 
   render() {
     const { t } = this.props;
@@ -68,7 +153,17 @@ class RegisterModal extends Component {
                 </div>
                 <hr />
               </div>
-              <form className={styles.form}>
+              <form className={styles.form} onSubmit={this.handleSignUp}>
+                {this.state.error && (
+                  <div className="alert alert-danger" role="alert">
+                    {t(this.state.error, this.state.errorData)}
+                  </div>
+                )}
+                {this.state.success && (
+                  <div className="alert alert-success" role="alert">
+                    {t(this.state.success)}
+                  </div>
+                )}
                 <div className="form-group">
                   <label>{t("modals.username")}</label>
                   <input
@@ -76,6 +171,10 @@ class RegisterModal extends Component {
                     className="form-control"
                     aria-describedby="emailHelp"
                     placeholder={t("modals.username")}
+                    required
+                    onChange={(e) =>
+                      this.setState({ username: e.target.value })
+                    }
                   />
                 </div>
                 <div className="form-group">
@@ -84,6 +183,8 @@ class RegisterModal extends Component {
                     type="email"
                     className="form-control"
                     placeholder={t("modals.email")}
+                    required
+                    onChange={(e) => this.setState({ email: e.target.value })}
                   />
                 </div>
                 <div className="form-group">
@@ -93,6 +194,11 @@ class RegisterModal extends Component {
                     className="form-control"
                     placeholder={t("modals.password")}
                     aria-describedby="passwordHelp"
+                    required
+                    minlength="8"
+                    onChange={(e) =>
+                      this.setState({ password: e.target.value })
+                    }
                   />
                   <small className="form-text text-muted">
                     {t("modals.passwordMinLength")}
@@ -104,23 +210,42 @@ class RegisterModal extends Component {
                     type="password"
                     className="form-control"
                     placeholder={t("modals.password")}
+                    required
+                    minlength="8"
+                    onChange={(e) =>
+                      this.setState({ confirmPassword: e.target.value })
+                    }
                   />
                 </div>
                 <div className="form-group">
                   <label>{t("modals.birthDate")}</label>
                   <input
-                    type="text"
-                    className="form-control"
+                    className="form-control datepicker"
                     placeholder="dd/mm/yyyy"
+                    data-date-format="dd/mm/yyyy"
+                    required
+                    onChange={(e) =>
+                      this.setState({ birthDate: e.target.value })
+                    }
                   />
                 </div>
                 <div className="form-group">
-                  <a className="form-check-label" href="#">
+                  <a
+                    className="form-check-label"
+                    href="#"
+                    onClick={this.handleLoginButton}
+                  >
                     {t("modals.alreadyHasAccount")}
                   </a>
                 </div>
                 <button type="submit" className="btn btn-primary btn-block">
-                  {t("components.navbar.register")}
+                  {this.state.loading ? (
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  ) : (
+                    t("components.navbar.register")
+                  )}
                 </button>
               </form>
               <hr />

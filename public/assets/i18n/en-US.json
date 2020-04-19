@@ -17,7 +17,26 @@
       "view_plural": "{{countText}} views"
     }
   },
+  "errors": {
+    "accountBanned": "This account has been banned!",
+    "accountNotActive": "Your email has not been verified, to resend the validation email click here",
+    "birthDateEmpty": "Date of birth cannot be empty",
+    "emailAlreadyRegistered": "This email is already registered.",
+    "emailNotRegistered": "This email is not registered.",
+    "failedToRegister": "Failed to register. Contact support and use ID: {{id}}",
+    "fieldsMissing": "There are fields missing.",
+    "incorrectPassword": "The password is incorrect!",
+    "invalidBirthDate": "Invalid date of birth!",
+    "invalidEmail": "This email is invalid!",
+    "invalidUsername": "This username is invalid!",
+    "loginError": "There was a problem signing in, check your credentials, if the problem persists please contact support.",
+    "passwordEmpty": "The password cannot be empty.",
+    "passwordsDontMatch": "Passwords are not the same.",
+    "usernameAlreadyRegistered": "This username is already registered.",
+    "usernameEmpty": "Username cannot be empty."
+  },
   "modals": {
+    "accountCreated": "Account created! Check your email to validate your account.",
     "alreadyHasAccount": "Already have an account?",
     "birthDate": "Date of Birth",
     "confirmPassword": "Confirm Password",

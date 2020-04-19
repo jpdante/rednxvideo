@@ -28,6 +28,11 @@ $input-border-color: #212224;
 $input-focus-border-color: #212224;
 $input-color: white;
 
+// -- Alerts --
+$alert-bg-level: 10;
+$alert-border-level: 0;
+$alert-color-level: -10;
+
 @import "node_modules/bootstrap/scss/bootstrap";
 
 body,
@@ -116,4 +121,24 @@ html,
       color: #ffffff !important;
     }
   }
+}
+
+.datepicker-days {
+  color: #363636;
+}
+
+.datepicker-months {
+  color: #363636;
+}
+
+.datepicker-years {
+  color: #363636;
+}
+
+.datepicker-decades {
+  color: #363636;
+}
+
+.datepicker-centuries {
+  color: #363636;
 }
