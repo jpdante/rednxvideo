@@ -2,13 +2,14 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import api from "../../services/api";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import $ from "jquery";
 import "bootstrap-datepicker/js/bootstrap-datepicker";
 import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
 
-import styles from "./registermodal.module.scss";
+import styles from "./register.module.scss";
 
-class RegisterModal extends Component {
+class Register extends Component {
   state = {
     username: "",
     email: "",
@@ -39,6 +40,12 @@ class RegisterModal extends Component {
     $("#loginModal").modal("show");
   }
 
+  handleVerificationSuccess(token) {
+    this.setState({
+      captcha: token,
+    });
+  }
+
   handleSignUp = async (e) => {
     e.preventDefault();
     this.setState({
@@ -50,6 +57,7 @@ class RegisterModal extends Component {
       password,
       confirmPassword,
       birthDate,
+      captcha
     } = this.state;
     if (!username) {
       this.setState({ error: "errors.passwordEmpty", success: "" });
@@ -82,7 +90,8 @@ class RegisterModal extends Component {
         email,
         password,
         birthdate: birthDate,
-        captcha: "none",
+        captcha,
+        lang: "pt-br"
       });
       this.setState({ loading: false });
       if (response.data.success) {
@@ -238,6 +247,14 @@ class RegisterModal extends Component {
                     {t("modals.alreadyHasAccount")}
                   </a>
                 </div>
+                <div className="text-center">
+                  <HCaptcha
+                    className="text-center"
+                    sitekey="0bf5a996-480a-4bab-81b5-20d85f1ade44"
+                    theme="dark"
+                    onVerify={(token) => this.handleVerificationSuccess(token)}
+                  />
+                </div>
                 <button type="submit" className="btn btn-primary btn-block">
                   {this.state.loading ? (
                     <div className="spinner-border" role="status">
@@ -257,4 +274,4 @@ class RegisterModal extends Component {
   }
 }
 
-export default withTranslation()(RegisterModal);
+export default withTranslation()(Register);

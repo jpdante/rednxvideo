@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 
-import { isAuthenticated, login, logout } from "../../services/auth";
+import { isAuthenticated, logout } from "../../services/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import styles from "./navbar.module.scss";
@@ -79,26 +79,14 @@ class NavBar extends Component {
               </Link>
             </li>
             <li className="nav-item">
-              <a
-                className="nav-link text-center"
-                role="button"
-                aria-disabled="true"
-                data-toggle="modal"
-                data-target="#loginModal"
-              >
+              <Link className="nav-link text-center" to="/login">
                 {t("components.navbar.login")}
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a
-                className="nav-link text-center"
-                role="button"
-                aria-disabled="true"
-                data-toggle="modal"
-                data-target="#registerModal"
-              >
+              <Link className="nav-link text-center" to="/register">
                 {t("components.navbar.register")}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -143,22 +131,12 @@ class NavBar extends Component {
                 this.state.isAuthenticated ? "noAuthentication" : "show"
               }`}
             >
-              <button
-                className={`btn btn-sm btn-secondary mx-1`}
-                type="button"
-                data-toggle="modal"
-                data-target="#loginModal"
-              >
+              <Link className={`btn btn-sm btn-secondary mx-1`} to="/login">
                 {t("components.navbar.login")}
-              </button>
-              <button
-                className={`btn btn-sm btn-primary mx-1`}
-                type="button"
-                data-toggle="modal"
-                data-target="#registerModal"
-              >
+              </Link>
+              <Link className={`btn btn-sm btn-primary mx-1`} to="/register">
                 {t("components.navbar.register")}
-              </button>
+              </Link>
             </form>
 
             <li

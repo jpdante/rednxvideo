@@ -2,17 +2,19 @@
 import React, { Component } from "react";
 import { withTranslation } from "react-i18next";
 import $ from "jquery";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 
-import styles from "./loginmodal.module.scss";
+import styles from "./login.module.scss";
 
-class LoginModal extends Component {
+class Login extends Component {
   state = {
     email: "",
     password: "",
     error: "",
-    loading: false
+    captcha: "",
+    loading: false,
   };
 
   handleRegisterButton() {
@@ -25,13 +27,19 @@ class LoginModal extends Component {
     $("#loginModal").modal("show");
   }
 
+  handleVerificationSuccess(token) {
+    this.setState({
+      captcha: token,
+    });
+  }
+
   handleSignIn = async (e) => {
     e.preventDefault();
     this.setState({
       error: "",
       loading: false,
     });
-    const { email, password } = this.state;
+    const { email, password, captcha } = this.state;
     if (!email) {
       this.setState({ error: "errors.emailEmpty" });
       return;
@@ -45,7 +53,7 @@ class LoginModal extends Component {
       const response = await api.post("/api/login", {
         email,
         password,
-        captcha: "none",
+        captcha,
       });
       this.setState({ loading: false });
       if (response.data.success) {
@@ -155,6 +163,14 @@ class LoginModal extends Component {
                     {t("modals.forgotPassword")}
                   </a>
                 </div>
+                <div className="text-center">
+                  <HCaptcha
+                    className="text-center"
+                    sitekey="0bf5a996-480a-4bab-81b5-20d85f1ade44"
+                    theme="dark"
+                    onVerify={(token) => this.handleVerificationSuccess(token)}
+                  />
+                </div>
                 <button
                   type="submit"
                   className="btn btn-primary btn-block"
@@ -178,4 +194,4 @@ class LoginModal extends Component {
   }
 }
 
-export default withTranslation()(LoginModal);
+export default withTranslation()(Login);

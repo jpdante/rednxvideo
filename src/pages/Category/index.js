@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 
-import NavBar from "../../components/NavBar";
-import SideBar from "../../components/SideBar";
+import FadeIn from "react-fade-in";
 import VideoThumb from "../../components/VideoThumb";
-import AuthModals from "../../components/AuthModals";
 
 import styles from "./category.module.scss";
 
@@ -45,33 +43,26 @@ class Category extends Component {
 
   render() {
     return (
-      <div className="content">
-        <NavBar />
-        <div className="wrapper">
-          <SideBar />
-          <div className="page-content">
-            <div className={styles.listMargin}>
-              <h5>Categoria {this.state.category}</h5>
-              <hr />
-              <div className="row">
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-              </div>
-            </div>
+      <FadeIn className="page-content">
+        <div className={styles.listMargin}>
+          <h5>Categoria {this.state.category}</h5>
+          <hr />
+          <div className="row">
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
+            <VideoThumb />
           </div>
         </div>
-        <AuthModals />
-      </div>
+      </FadeIn>
     );
   }
 }

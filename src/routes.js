@@ -13,6 +13,12 @@ import Live from "./pages/Live";
 import Recommended from "./pages/Recommended";
 import History from "./pages/History";
 import Following from "./pages/Following";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Loading from "./pages/Loading";
+
+import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -29,8 +35,30 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 const Routes = () => (
   <BrowserRouter>
-    <Suspense fallback="loading">
-      <Switch>
+    <Suspense fallback={<Loading />}>
+      <div className="content">
+        <NavBar />
+        <div className="wrapper">
+          <SideBar />
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/watch/:id" component={Watch} />
+            <Route path="/category/:category" component={Category} />
+            <Route path="/channel/:channel" component={Channel} />
+            <Route path="/discover" component={Discover} />
+            <Route path="/hot" component={Hot} />
+            <Route path="/live" component={Live} />
+            <Route path="/recommended" component={Recommended} />
+            <Route path="/history" component={History} />
+            <Route path="/following" component={Following} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/loading" component={Loading} />
+            <Route path="*" component={() => <h1>Page not found</h1>} />
+          </Switch>
+        </div>
+      </div>
+      {/*<Switch>
         <Route path="/" exact component={Home} />
         <Route path="/watch/:id" component={Watch} />
         <Route path="/category/:category" component={Category} />
@@ -41,8 +69,11 @@ const Routes = () => (
         <Route path="/recommended" component={Recommended} />
         <Route path="/history" component={History} />
         <Route path="/following" component={Following} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/loading" component={Loading} />
         <Route path="*" component={() => <h1>Page not found</h1>} />
-      </Switch>
+      </Switch>*/}
     </Suspense>
   </BrowserRouter>
 );
