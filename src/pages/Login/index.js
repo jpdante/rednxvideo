@@ -1,41 +1,37 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { Link, Redirect } from "react-router-dom";
+import FadeIn from "react-fade-in";
+
 import { withTranslation } from "react-i18next";
-import $ from "jquery";
+
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import api from "../../services/api";
-import { login } from "../../services/auth";
+import { login, isAuthenticated } from "../../services/auth";
 
 import styles from "./login.module.scss";
 
 class Login extends Component {
-  state = {
-    email: "",
-    password: "",
-    error: "",
-    captcha: "",
-    loading: false,
+  constructor(props) {
+    super(props);
+    this.hCaptchaRef = React.createRef();
+    this.state = {
+      email: "",
+      password: "",
+      error: "",
+      captcha: "",
+      loading: false,
+    };
+  }
+
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    this.hCaptchaRef.current.execute();
   };
 
-  handleRegisterButton() {
-    $("#loginModal").modal("hide");
-    $("#registerModal").modal("show");
-  }
-
-  handleLoginButton() {
-    $("#registerModal").modal("hide");
-    $("#loginModal").modal("show");
-  }
-
-  handleVerificationSuccess(token) {
+  handleVerificationSuccess = async (token) => {
     this.setState({
       captcha: token,
-    });
-  }
-
-  handleSignIn = async (e) => {
-    e.preventDefault();
-    this.setState({
       error: "",
       loading: false,
     });
@@ -74,123 +70,118 @@ class Login extends Component {
   };
 
   render() {
-    const { t } = this.props;
-    return (
-      <div
-        className="modal fade"
-        id="loginModal"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className={`${styles.loginModal} modal-body`}>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 className="modal-title text-center w-100">
-                <span style={{ color: "#B10003" }}>Red</span>NX
-              </h4>
-              <div className={`${styles.bar}`}>
-                <div>
-                  <div
-                    className={`${styles.button} ${styles.active} float-left`}
-                  >
-                    <a
-                      className={`text-center`}
-                      role="button"
-                      onClick={this.handleLoginButton}
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    } else {
+      const { t } = this.props;
+      return (
+        <FadeIn className="page-content" childClassName="fix-fadein">
+          <div className="center-page-content">
+            <div class={`${styles.fixBorder} shadow`}>
+              <div className={`${styles.authContainer}`}>
+                <h4 className="text-center w-100">
+                  <span style={{ color: "#B10003" }}>Red</span>NX
+                </h4>
+                <div className={`${styles.bar}`}>
+                  <div>
+                    <div
+                      className={`${styles.button} ${styles.active} float-left`}
                     >
-                      {t("components.navbar.login")}
-                    </a>
-                    <hr />
+                      <Link className={`text-center`} to="/login">
+                        {t("components.navbar.login")}
+                      </Link>
+                      <hr />
+                    </div>
+                    <div className={`${styles.button} float-left`}>
+                      <Link className={`text-center`} to="/register">
+                        {t("components.navbar.register")}
+                      </Link>
+                      <hr />
+                    </div>
+                    <div className={`${styles.button} float-none`}>&nbsp;</div>
                   </div>
-                  <div className={`${styles.button} float-left`}>
-                    <a
-                      className={`text-center`}
-                      role="button"
-                      onClick={this.handleRegisterButton}
-                    >
-                      {t("components.navbar.register")}
-                    </a>
-                    <hr />
-                  </div>
-                  <div className={`${styles.button} float-none`}>&nbsp;</div>
+                  <hr />
                 </div>
+                <form className={styles.form} onSubmit={this.handleSubmit}>
+                  {this.state.error && (
+                    <div className="alert alert-danger" role="alert">
+                      {t(this.state.error, this.state.errorData)}
+                    </div>
+                  )}
+                  <div className="form-group">
+                    <label>{t("modals.email")}</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      aria-describedby="emailHelp"
+                      placeholder={t("modals.email")}
+                      required
+                      onChange={(e) => this.setState({ email: e.target.value })}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>{t("modals.password")}</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder={t("modals.password")}
+                      required
+                      minlength="8"
+                      onChange={(e) =>
+                        this.setState({ password: e.target.value })
+                      }
+                    />
+                    <small className="form-text text-muted">
+                      {t("modals.passwordMinLength")}
+                    </small>
+                  </div>
+                  <div className="form-group">
+                    <Link className="form-check-label" to="/forgot-password">
+                      {t("modals.forgotPassword")}
+                    </Link>
+                  </div>
+                  <div className="text-center">
+                    <HCaptcha
+                      ref={this.hCaptchaRef}
+                      className="text-center"
+                      sitekey="0bf5a996-480a-4bab-81b5-20d85f1ade44"
+                      theme="dark"
+                      size="invisible"
+                      onVerify={(token) =>
+                        this.handleVerificationSuccess(token)
+                      }
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-block"
+                    onClick={this.login}
+                  >
+                    {this.state.loading ? (
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    ) : (
+                      t("components.navbar.login")
+                    )}
+                  </button>
+                  <div className="text-center my-3">
+                    <p>
+                      This site is protected by hCaptcha and its{" "}
+                      <a href="https://hcaptcha.com/privacy">Privacy Policy</a>{" "}
+                      and{" "}
+                      <a href="https://hcaptcha.com/terms">Terms of Service</a>{" "}
+                      apply.
+                    </p>
+                  </div>
+                </form>
                 <hr />
               </div>
-              <form className={styles.form} onSubmit={this.handleSignIn}>
-                {this.state.error && (
-                  <div className="alert alert-danger" role="alert">
-                    {t(this.state.error, this.state.errorData)}
-                  </div>
-                )}
-                <div className="form-group">
-                  <label>{t("modals.email")}</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    aria-describedby="emailHelp"
-                    placeholder={t("modals.email")}
-                    required
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>{t("modals.password")}</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder={t("modals.password")}
-                    required
-                    minlength="8"
-                    onChange={(e) =>
-                      this.setState({ password: e.target.value })
-                    }
-                  />
-                  <small className="form-text text-muted">
-                    {t("modals.passwordMinLength")}
-                  </small>
-                </div>
-                <div className="form-group">
-                  <a className="form-check-label" href="#">
-                    {t("modals.forgotPassword")}
-                  </a>
-                </div>
-                <div className="text-center">
-                  <HCaptcha
-                    className="text-center"
-                    sitekey="0bf5a996-480a-4bab-81b5-20d85f1ade44"
-                    theme="dark"
-                    onVerify={(token) => this.handleVerificationSuccess(token)}
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-primary btn-block"
-                  onClick={this.login}
-                >
-                  {this.state.loading ? (
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  ) : (
-                    t("components.navbar.login")
-                  )}
-                </button>
-              </form>
-              <hr />
             </div>
           </div>
-        </div>
-      </div>
-    );
+        </FadeIn>
+      );
+    }
   }
 }
 

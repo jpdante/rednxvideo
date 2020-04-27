@@ -42,7 +42,7 @@ class VideoThumb extends Component {
               </div>
             </div>
             <img
-              src="/assets/thumb.png"
+              src="/assets/thumb.jpg"
               width="1280"
               height="720"
               alt="Thumbnail do video"
@@ -53,7 +53,7 @@ class VideoThumb extends Component {
         <div className={styles.videoInfo}>
           <div className={styles.channelImage}>
             <Link to="/channel/ellisiumx">
-              <img src="https://picsum.photos/256/256" alt="Avatar do Canal" />
+              <img src="/assets/profilepic.jpg" alt="Avatar do Canal" />
             </Link>
           </div>
           <div className={styles.videoFooter}>

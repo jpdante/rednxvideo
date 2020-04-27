@@ -1,12 +1,18 @@
 import i18n from 'i18next'
 import Backend from 'i18next-xhr-backend'
 import { initReactI18next } from 'react-i18next'
+import { getLanguage } from './utils'
+
+var lang = localStorage.getItem("lang");
+if(lang == null) {
+  lang = navigator.language || navigator.userLanguage; 
+}
 
 i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: 'pt-BR',
+    lng: getLanguage(),
     backend: {
       /* translation file path */
       loadPath: '/assets/i18n/{{lng}}.json'

@@ -59,6 +59,18 @@ html,
   width: calc(100% - 240px);
   margin-left: 240px;
   transition: all 0.3s;
+  height: calc(100% + 56px);
+}
+
+.fix-fadein {
+  height: 100%;
+}
+
+.center-page-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @media (max-width: 768px) {
@@ -77,6 +89,10 @@ html,
   .page-content {
     padding: 0px 40px 20px 40px;
   }
+}
+
+.anchor {
+  border: none !important;
 }
 
 .col-md-3 {
@@ -123,22 +139,17 @@ html,
   }
 }
 
-.datepicker-days {
-  color: #363636;
+.react-datepicker-popper {
+  z-index: 2;
+  top: 34px !important;
+  /* needed because we made it inline */
 }
 
-.datepicker-months {
-  color: #363636;
-}
+.react-datepicker-wrapper,
+.react-datepicker-wrapper .react-datepicker__input-container {
+  /* https://github.com/Hacker0x01/react-datepicker/issues/1672 */
+  width: 100%;
 
-.datepicker-years {
-  color: #363636;
-}
-
-.datepicker-decades {
-  color: #363636;
-}
-
-.datepicker-centuries {
-  color: #363636;
+  /* to make it exactly the same height as the bootstrap input-group-addons */
+  display: inline;
 }

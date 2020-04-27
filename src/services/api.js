@@ -1,9 +1,9 @@
 import axios from "axios";
 import { getToken } from "./auth";
 
-const api = axios.create({
-  baseURL: "http://test.tryhosting.com.br"
-});
+const api = axios.create(/*{
+  baseURL: ""
+}*/);
 
 api.interceptors.request.use(async config => {
   const token = getToken();

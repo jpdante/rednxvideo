@@ -1,15 +1,28 @@
-.loginModal {
+.select {
+  width: 100px !important;
+}
+
+.fixBorder {
+  border: none !important;
+  max-width: 500px;
+  width: 100%;
+  display: table;
+  margin: 0 auto;
+}
+
+.authContainer {
+  background-color: #212224;
+  border-radius: 5px;
+  padding: 10px !important;
+
   hr {
     border: 1px solid #2c2c2c;
     border-radius: 5px;
   }
 
-  h4 {
-    margin-left: 16.22px;
-  }
-
   .bar {
     height: 28px;
+    margin-bottom: 20px;
 
     hr {
       border: 1px solid #2c2c2c;

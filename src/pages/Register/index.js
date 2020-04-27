@@ -1,55 +1,43 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from "react";
+import { Link, Redirect } from "react-router-dom";
+import FadeIn from "react-fade-in";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
+import { isAuthenticated } from "../../services/auth";
+
 import { withTranslation } from "react-i18next";
+
 import api from "../../services/api";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import $ from "jquery";
-import "bootstrap-datepicker/js/bootstrap-datepicker";
-import "bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css";
 
-import styles from "./register.module.scss";
+import styles from "../Login/login.module.scss";
 
 class Register extends Component {
-  state = {
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    birthDate: "",
-    error: "",
-    success: "",
-    errorData: null,
-    loading: false
-  };
-
-  componentDidMount() {
-    $(".datepicker")
-      .datepicker()
-      .on("changeDate", (ev) => {
-        this.setState({ birthDate: ev.target.value });
-      });
+  constructor(props) {
+    super(props);
+    this.hCaptchaRef = React.createRef();
+    this.state = {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      birthDate: new Date(),
+      error: "",
+      success: "",
+      errorData: null,
+      loading: false,
+    };
   }
 
-  handleRegisterButton() {
-    $("#loginModal").modal("hide");
-    $("#registerModal").modal("show");
-  }
+  componentDidMount() {}
 
-  handleLoginButton() {
-    $("#registerModal").modal("hide");
-    $("#loginModal").modal("show");
-  }
-
-  handleVerificationSuccess(token) {
+  handleVerificationSuccess = async (token) => {
     this.setState({
       captcha: token,
-    });
-  }
-
-  handleSignUp = async (e) => {
-    e.preventDefault();
-    this.setState({
       error: "",
+      loading: false,
     });
     const {
       username,
@@ -57,30 +45,62 @@ class Register extends Component {
       password,
       confirmPassword,
       birthDate,
-      captcha
+      captcha,
     } = this.state;
     if (!username) {
-      this.setState({ error: "errors.passwordEmpty", success: "" });
+      this.setState({
+        error: "errors.usernameEmpty",
+        success: "",
+      });
+      return;
+    }
+    if (/^[a-zA-Z0-9_.-]*$/.test(username) === false) {
+      this.setState({
+        error: "errors.usernameInvalid",
+        success: "",
+      });
+      return;
+    }
+    if (username.length < 3 || username.length > 20) {
+      this.setState({
+        error: "errors.usernameSize",
+        success: "",
+      });
       return;
     }
     if (!email) {
-      this.setState({ error: "errors.emailEmpty", success: "" });
+      this.setState({
+        error: "errors.emailEmpty",
+        success: "",
+      });
       return;
     }
     if (!password) {
-      this.setState({ error: "errors.passwordEmpty", success: "" });
+      this.setState({
+        error: "errors.passwordEmpty",
+        success: "",
+      });
       return;
     }
     if (!confirmPassword) {
-      this.setState({ error: "errors.confirmPasswordEmpty", success: "" });
+      this.setState({
+        error: "errors.confirmPasswordEmpty",
+        success: "",
+      });
       return;
     }
     if (password !== confirmPassword) {
-      this.setState({ error: "errors.passwordsDontMatch", success: "" });
+      this.setState({
+        error: "errors.passwordsDontMatch",
+        success: "",
+      });
       return;
     }
     if (!birthDate) {
-      this.setState({ error: "errors.birthDateEmpty", success: "" });
+      this.setState({
+        error: "errors.birthDateEmpty",
+        success: "",
+      });
       return;
     }
     try {
@@ -91,186 +111,193 @@ class Register extends Component {
         password,
         birthdate: birthDate,
         captcha,
-        lang: "pt-br"
+        lang: "pt-br",
       });
       this.setState({ loading: false });
       if (response.data.success) {
-        this.setState({ error: "", success: "modals.accountCreated" });
+        this.setState({
+          loading: false,
+          error: "",
+          success: "modals.accountCreated",
+        });
       } else {
         this.setState({
+          loading: false,
           error: response.data.message,
           errorData: response.data,
           success: "",
         });
       }
     } catch (err) {
-      this.setState({ loading: false });
       console.log(err);
-      this.setState({ error: "errors.loginError", success: "" });
+      this.setState({
+        loading: false,
+        error: "errors.loginError",
+        success: "",
+      });
     }
   };
 
+  handleSubmit = async (e) => {
+    e.preventDefault();
+    this.hCaptchaRef.current.execute();
+  };
+
   render() {
-    const { t } = this.props;
-    return (
-      <div
-        className="modal fade"
-        id="registerModal"
-        role="dialog"
-        aria-labelledby="exampleModalCenterTitle"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog modal-dialog-centered" role="document">
-          <div className="modal-content">
-            <div className={`${styles.loginModal} modal-body`}>
-              <button
-                type="button"
-                className="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h4 className="modal-title text-center w-100">
-                <span style={{ color: "#B10003" }}>Red</span>NX
-              </h4>
-              <div className={`${styles.bar}`}>
-                <div className="">
-                  <div className={`${styles.button} float-left`}>
-                    <a
-                      className={`text-center`}
-                      role="button"
-                      onClick={this.handleLoginButton}
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    } else {
+      const { t } = this.props;
+      const hCaptchaRef = React.createRef();
+      return (
+        <FadeIn className="page-content" childClassName="fix-fadein">
+          <div className="py-5">
+            <div class={`${styles.fixBorder} shadow`}>
+              <div className={`${styles.authContainer}`}>
+                <h4 className="text-center w-100">
+                  <span style={{ color: "#B10003" }}>Red</span>NX
+                </h4>
+                <div className={`${styles.bar}`}>
+                  <div className="">
+                    <div className={`${styles.button} float-left`}>
+                      <Link className={`text-center`} to="/login">
+                        {t("components.navbar.login")}
+                      </Link>
+                      <hr />
+                    </div>
+                    <div
+                      className={`${styles.button} ${styles.active} float-left`}
                     >
-                      {t("components.navbar.login")}
-                    </a>
-                    <hr />
+                      <Link className={`text-center`} to="/register">
+                        {t("components.navbar.register")}
+                      </Link>
+                      <hr />
+                    </div>
+                    <div className={`${styles.button} float-none`}>&nbsp;</div>
                   </div>
-                  <div
-                    className={`${styles.button} ${styles.active} float-left`}
-                  >
-                    <a
-                      className={`text-center`}
-                      role="button"
-                      onClick={this.handleRegisterButton}
-                    >
-                      {t("components.navbar.register")}
-                    </a>
-                    <hr />
+                  <hr />
+                </div>
+                <form className={styles.form} onSubmit={this.handleSubmit}>
+                  {this.state.error && (
+                    <div className="alert alert-danger" role="alert">
+                      {t(this.state.error, this.state.errorData)}
+                    </div>
+                  )}
+                  {this.state.success && (
+                    <div className="alert alert-success" role="alert">
+                      {t(this.state.success)}
+                    </div>
+                  )}
+                  <div className="form-group">
+                    <label>{t("modals.username")}</label>
+                    <input
+                      type="username"
+                      className="form-control"
+                      aria-describedby="emailHelp"
+                      placeholder={t("modals.username")}
+                      required
+                      onChange={(e) =>
+                        this.setState({ username: e.target.value })
+                      }
+                    />
                   </div>
-                  <div className={`${styles.button} float-none`}>&nbsp;</div>
-                </div>
-                <hr />
-              </div>
-              <form className={styles.form} onSubmit={this.handleSignUp}>
-                {this.state.error && (
-                  <div className="alert alert-danger" role="alert">
-                    {t(this.state.error, this.state.errorData)}
+                  <div className="form-group">
+                    <label>{t("modals.email")}</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      placeholder={t("modals.email")}
+                      required
+                      onChange={(e) => this.setState({ email: e.target.value })}
+                    />
                   </div>
-                )}
-                {this.state.success && (
-                  <div className="alert alert-success" role="alert">
-                    {t(this.state.success)}
+                  <div className="form-group">
+                    <label>{t("modals.password")}</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder={t("modals.password")}
+                      aria-describedby="passwordHelp"
+                      required
+                      minlength="8"
+                      onChange={(e) =>
+                        this.setState({ password: e.target.value })
+                      }
+                    />
+                    <small className="form-text text-muted">
+                      {t("modals.passwordMinLength")}
+                    </small>
                   </div>
-                )}
-                <div className="form-group">
-                  <label>{t("modals.username")}</label>
-                  <input
-                    type="username"
-                    className="form-control"
-                    aria-describedby="emailHelp"
-                    placeholder={t("modals.username")}
-                    required
-                    onChange={(e) =>
-                      this.setState({ username: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="form-group">
-                  <label>{t("modals.email")}</label>
-                  <input
-                    type="email"
-                    className="form-control"
-                    placeholder={t("modals.email")}
-                    required
-                    onChange={(e) => this.setState({ email: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label>{t("modals.password")}</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder={t("modals.password")}
-                    aria-describedby="passwordHelp"
-                    required
-                    minlength="8"
-                    onChange={(e) =>
-                      this.setState({ password: e.target.value })
-                    }
-                  />
-                  <small className="form-text text-muted">
-                    {t("modals.passwordMinLength")}
-                  </small>
-                </div>
-                <div className="form-group">
-                  <label>{t("modals.confirmPassword")}</label>
-                  <input
-                    type="password"
-                    className="form-control"
-                    placeholder={t("modals.password")}
-                    required
-                    minlength="8"
-                    onChange={(e) =>
-                      this.setState({ confirmPassword: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="form-group">
-                  <label>{t("modals.birthDate")}</label>
-                  <input
+                  <div className="form-group">
+                    <label>{t("modals.confirmPassword")}</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      placeholder={t("modals.password")}
+                      required
+                      minlength="8"
+                      onChange={(e) =>
+                        this.setState({ confirmPassword: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>{t("modals.birthDate")}</label>
+                    {/*<input
                     className="form-control datepicker"
                     placeholder="dd/mm/yyyy"
                     data-date-format="dd/mm/yyyy"
+                    pattern="[0-9]{8}"
                     required
                     onChange={(e) =>
                       this.setState({ birthDate: e.target.value })
                     }
-                  />
-                </div>
-                <div className="form-group">
-                  <a
-                    className="form-check-label"
-                    href="#"
-                    onClick={this.handleLoginButton}
-                  >
-                    {t("modals.alreadyHasAccount")}
-                  </a>
-                </div>
-                <div className="text-center">
-                  <HCaptcha
-                    className="text-center"
-                    sitekey="0bf5a996-480a-4bab-81b5-20d85f1ade44"
-                    theme="dark"
-                    onVerify={(token) => this.handleVerificationSuccess(token)}
-                  />
-                </div>
-                <button type="submit" className="btn btn-primary btn-block">
-                  {this.state.loading ? (
-                    <div className="spinner-border" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  ) : (
-                    t("components.navbar.register")
-                  )}
-                </button>
-              </form>
-              <hr />
+                  />*/}
+                    <DatePicker
+                      style={{ width: "100%" }}
+                      selected={this.state.birthDate}
+                      onChange={(date) => this.setState({ birthDate: date })}
+                      maxDate={new Date()}
+                      className="form-control"
+                      dateFormat="dd/MM/yyyy"
+                      showMonthDropdown
+                      showYearDropdown
+                    />
+                  </div>
+                  <div className="form-group">
+                    <Link className="form-check-label" to="/login">
+                      {t("modals.alreadyHasAccount")}
+                    </Link>
+                  </div>
+                  <div className="text-center">
+                    <HCaptcha
+                      ref={this.hCaptchaRef}
+                      className="text-center"
+                      sitekey="0bf5a996-480a-4bab-81b5-20d85f1ade44"
+                      theme="dark"
+                      size="invisible"
+                      onVerify={(token) =>
+                        this.handleVerificationSuccess(token)
+                      }
+                    />
+                  </div>
+                  <button type="submit" className="btn btn-primary btn-block">
+                    {this.state.loading ? (
+                      <div className="spinner-border" role="status">
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    ) : (
+                      t("components.navbar.register")
+                    )}
+                  </button>
+                </form>
+                <hr />
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    );
+        </FadeIn>
+      );
+    }
   }
 }
 

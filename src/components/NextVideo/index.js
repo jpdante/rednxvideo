@@ -36,7 +36,7 @@ class NextVideo extends Component {
                 </div>
               </div>
               <img
-                src="/assets/thumb.png"
+                src="/assets/thumb.jpg"
                 alt="Thumbnail do video"
                 className={styles.image}
               />
