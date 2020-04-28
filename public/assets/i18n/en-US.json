@@ -66,6 +66,7 @@
     },
     "home": {
       "followed": "Followed channels",
+      "newVideos": "New videos",
       "videosai": "Videos we think you'll like"
     },
     "live": {

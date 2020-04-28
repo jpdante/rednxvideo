@@ -17,8 +17,9 @@ i18n
       /* translation file path */
       loadPath: '/assets/i18n/{{lng}}.json'
     },
-    fallbackLng: 'en-US',
-    debug: true,
+    fallbackLng: 'pt-BR',
+    debug: false,
+    load: 'currentOnly',
     /* can have multiple namespace, in case you want to divide a huge translation into smaller pieces and load them on demand */
     ns: ['translations'],
     defaultNS: 'translations',

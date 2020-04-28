@@ -40,3 +40,15 @@ export const timeToText = (unix_timestamp) =>  {
   }
   return i18n.t('time.second', { count: Math.floor(seconds) });
 }
+
+export const numberToTime = (time) => {
+  var hrs = ~~(time / 3600);
+  var mins = ~~((time % 3600) / 60);
+  var secs = ~~time % 60;
+  var ret = "";
+  if (hrs > 0) {
+      ret += "" + (hrs < 10 ? "0" : "") + hrs + ":";
+  }
+  ret += "" + (mins < 10 ? "0" : "") + mins + ":" + (secs < 10 ? "0" : "") + "" + secs;
+  return ret;
+}

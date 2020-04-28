@@ -148,7 +148,6 @@ class Register extends Component {
       return <Redirect to="/" />;
     } else {
       const { t } = this.props;
-      const hCaptchaRef = React.createRef();
       return (
         <FadeIn className="page-content" childClassName="fix-fadein">
           <div className="py-5">

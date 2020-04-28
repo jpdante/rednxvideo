@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch/*, Redirect*/ } from "react-router-dom";
 
-import { isAuthenticated } from "./services/auth";
+//import { isAuthenticated } from "./services/auth";
 
 import Home from "./pages/Home";
 import Discover from "./pages/Discover";
@@ -21,7 +21,7 @@ import Loading from "./pages/Loading";
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+/*const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={(props) =>
@@ -32,7 +32,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       )
     }
   />
-);
+);*/
 
 const Routes = () => (
   <BrowserRouter>
