@@ -21,7 +21,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "jquery": "^3.4.1",
     "node-sass": "^4.13.1",
-    "plyr": "^3.5.10",
+    "plyr": "^3.6.1",
     "popper.js": "^1.16.1",
     "react": "^16.13.1",
     "react-autosize-textarea": "^7.0.0",

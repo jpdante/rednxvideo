@@ -1,11 +1,11 @@
 import axios from "axios";
 import { getToken } from "./auth";
 
-const api = axios.create(/*{
+const net = axios.create(/*{
   baseURL: ""
 }*/);
 
-api.interceptors.request.use(async config => {
+net.interceptors.request.use(async config => {
   const token = getToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -13,4 +13,4 @@ api.interceptors.request.use(async config => {
   return config;
 });
 
-export default api;
+export default net;

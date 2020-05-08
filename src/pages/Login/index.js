@@ -6,7 +6,7 @@ import FadeIn from "react-fade-in";
 import { withTranslation } from "react-i18next";
 
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import api from "../../services/api";
+import net from "../../services/net";
 import { login, isAuthenticated } from "../../services/auth";
 
 import styles from "./login.module.scss";
@@ -46,7 +46,7 @@ class Login extends Component {
     }
     try {
       this.setState({ loading: true });
-      const response = await api.post("/api/login", {
+      const response = await net.post("/api/login", {
         email,
         password,
         captcha,

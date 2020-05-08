@@ -4,8 +4,10 @@ import { withRouter, Link } from "react-router-dom";
 import { withTranslation } from "react-i18next";
 import { numberToText } from "../../library/numberText";
 
-//import dashjs from "dashjs";
+import dashjs from "dashjs";
 import Plyr from "plyr";
+import api from "../../library/api";
+import $ from "jquery";
 import TextareaAutosize from "react-autosize-textarea";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { isAuthenticated } from "../../services/auth";
@@ -23,7 +25,11 @@ class Watch extends Component {
     following: false,
     showDescription: false,
     isAuthenticated: isAuthenticated(),
-    videoTitle: this.props.match.params.id,
+    videoData: {
+      title: "",
+      channelName: "",
+      channelLink: "",
+    }
   };
 
   follow = async (e) => {
@@ -32,10 +38,12 @@ class Watch extends Component {
       this.setState({
         following: false,
       });
+      await api.updateFollow(this.state.videoData.channelId, false);
     } else {
       this.setState({
         following: true,
       });
+      await api.updateFollow(this.state.videoData.channelId, true);
     }
   };
 
@@ -59,11 +67,13 @@ class Watch extends Component {
         like: false,
         dislike: false,
       });
+      await api.updateLike(this.state.videoData.id, null);
     } else {
       this.setState({
         like: true,
         dislike: false,
       });
+      await api.updateLike(this.state.videoData.id, true);
     }
   };
 
@@ -74,32 +84,98 @@ class Watch extends Component {
         like: false,
         dislike: false,
       });
+      await api.updateLike(this.state.videoData.id, null);
     } else {
       this.setState({
         like: false,
         dislike: true,
       });
+      await api.updateLike(this.state.videoData.id, false);
     }
   };
 
-  componentDidMount() {
+  async componentDidMount() {
+    const response = await api.getVideo(this.props.match.params.id);
+    if (response.data.userInfo === undefined) {
+      this.setState({
+        isLoading: false,
+        videoData: response.data.video,
+      });
+    } else {
+      this.setState({
+        isLoading: false,
+        like: response.data.userInfo.liked,
+        dislike: response.data.userInfo.disliked,
+        following: response.data.userInfo.following,
+        videoData: response.data.video,
+      });
+    }
     //const source = "https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd";
     // For more dash options, see https://github.com/Dash-Industry-Forum/dash.js
     //const dash = dashjs.MediaPlayer().create();
-    //const video = document.querySelector("video");
-    //dash.updateSettings({ 'debug': { 'logLevel': dashjs.Debug.LOG_LEVEL_NONE }});
+    const video = document.querySelector("video");
+    //dash.updateSettings({ debug: { logLevel: dashjs.Debug.LOG_LEVEL_NONE } });
     //dash.initialize(video, source, true);
 
     // Update caption tracks after initializing Plyr to get the generated captions
     // For more options see: https://github.com/sampotts/plyr/#options
-    /*const player = new Plyr(video, {
+    const player = new Plyr(video, {
       captions: { active: true, update: true },
-    });*/
-    const player = new Plyr("#player");
+      /*quality: {
+        forced: true,
+        default: 480,
+        options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240],
+        onChange: null,
+      },*/
+    });
+    
+    this.setState({
+      player: player,
+      sourceData: [
+        {
+          src: "http://localhost:3000/assets/video/1080.mpd",
+          size: 1080,
+          mode: "mpd", // How to analyze
+        },
+        {
+          src: "http://localhost:3000/assets/video/480.mpd",
+          size: 480,
+          mode: "mpd", // How to analyze
+        }
+      ]
+    })
 
-    // Expose player and dash so they can be used from the console
-    window.player = player;
-    //window.dash = dash;
+    player.source = {
+      // type: 'audio',
+      type: "video",
+      title: "Titulo",
+      sources: this.state.sourceData,
+    };
+
+    player.on('qualitychange', event => {
+      this.initPlayer();
+    });
+    this.initPlayer();
+  }
+
+  initPlayer() {
+    const { sourceData, player } = this.state;
+    console.log(player);
+    $.each(sourceData, function () {
+      const video = document.querySelector('video');
+      $.each(sourceData, function () {
+          // dash Adaptation
+          if (this.mode === 'mpd' && this.size === player.config.quality.selected) {
+              // For more dash options, see https://github.com/Dash-Industry-Forum/dash.js
+              const dash = dashjs.MediaPlayer().create();
+              dash.updateSettings({ debug: { logLevel: dashjs.Debug.LOG_LEVEL_NONE } });
+              dash.initialize(video, this.src, true);
+              // Expose player and dash so they can be used from the console
+              window.player = player;
+              window.dash = dash;
+          }
+      })
+    })
   }
 
   render() {
@@ -115,24 +191,26 @@ class Watch extends Component {
                   src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-1080p.mp4"
                   poster="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-HD.jpg"
                 ></video>*/}
-            <div
-              id="player"
-              data-plyr-provider="youtube"
-              data-plyr-embed-id="1La4QzGeaaQ"
-            ></div>
+            <video
+              className={styles.player}
+              controls
+              crossOrigin="true"
+              playsInline
+              poster="https://bitdash-a.akamaihd.net/content/sintel/poster.png"
+            ></video>
             <div className={`${styles.videoTitleContainer}`}>
               <div className={`${styles.videoIcon}`}>
                 <img src="https://picsum.photos/66/66" alt="game" />
               </div>
               <div className={`${styles.videoClassification}`}>L</div>
               <div className={`${styles.videoTitle}`}>
-                <h5>{this.state.videoTitle}</h5>
+                <h5>{this.state.videoData.title}</h5>
               </div>
             </div>
             <div className={styles.descriptionContainer}>
               <div className="row">
                 <div className={`${styles.channelImage} col-lg-12 col-xl-6`}>
-                  <Link to="/channel/ellisiumx">
+                  <Link to={`/channel/${this.state.videoData.channelLink}`}>
                     <img
                       src="https://picsum.photos/256/256"
                       alt="Avatar do Canal"
@@ -140,8 +218,8 @@ class Watch extends Component {
                   </Link>
                   <div className={styles.channelNameContainer}>
                     <div className={styles.channelName}>
-                      <Link to="/channel/ellisiumx">
-                        Este é o Nome do Canal
+                      <Link to={`/channel/${this.state.videoData.channelLink}`}>
+                        {this.state.videoData.channelName}
                       </Link>
                     </div>
                     <div className={styles.channelFollowers}>
@@ -154,16 +232,16 @@ class Watch extends Component {
                 <div className={`${styles.channelButtons} col-lg-12 col-xl-6`}>
                   <button
                     type="button"
-                    className={`btn ${this.state.dislike ? "btn-primary" : ""}`}
-                    onClick={this.dislike}
+                    className={`btn ${this.state.like ? "btn-primary" : ""}`}
+                    onClick={this.like}
                   >
                     <FontAwesomeIcon icon="thumbs-up" className={styles.icon} />
                     &nbsp;&nbsp; {t("shared.like")}
                   </button>
                   <button
                     type="button"
-                    className={`btn ${this.state.like ? "btn-primary" : ""}`}
-                    onClick={this.like}
+                    className={`btn ${this.state.dislike ? "btn-primary" : ""}`}
+                    onClick={this.dislike}
                   >
                     <FontAwesomeIcon
                       icon="thumbs-down"
@@ -201,63 +279,13 @@ class Watch extends Component {
                   </button>
                 </div>
               </div>
-              <div className="card">
+              <div className={`${styles.card} card`}>
                 <div
                   className={`${styles.description} card-body ${
                     this.state.showDescription ? styles.active : ""
                   }`}
                 >
-                  <p>
-                    Daughter - Medicine (Sound Remedy Remix) ⬙ FAVOURITES ON
-                    <br />
-                    <br />
-                    SPOTIFY ⬙ ⇥ http://mrsuicidesheep.com/favourites
-                    <br />
-                    <br />
-                    Phenomenal remix! Purchase the
-                    <br />
-                    original...http://bit.ly/1vo3xcp Download the remix
-                    <br />
-                    here... https://soundremedy.toneden.io/spotli... Released
-                    <br />
-                    by Glassnote Music http://glassnotemusic.com
-                    <br />
-                    <br />
-                    https://www.facebook.com/glassnote
-                    <br />
-                    https://twitter.com/glassnotemusic Daughter
-                    <br />
-                    http://soundcloud.com/ohdaughter
-                    <br />
-                    http://www.facebook.com/ohdaughter
-                    <br />
-                    http://twitter.com/ohdaughter Sound Remedy
-                    <br />
-                    http://soundcloud.com/soundremedy
-                    <br />
-                    http://www.soundremedy.com/
-                    <br />
-                    http://www.facebook.com/soundremedy
-                    <br />
-                    https://twitter.com/SoundRemedy Sheepy twitter
-                    <br />
-                    https://twitter.com/MrSuicideSheep Artwork by ? If anyone
-                    <br />
-                    <br />
-                    knows who created this image please link me to their page.
-                    <br />
-                    <br />
-                    ⬗ Sheepy Store ⬗ ⇥ http://mrsuicidesheep.com/store ⬖
-                    <br />
-                    Submit Music & Art ⬖ ⇥ http://mrsuicidesheep.com/submit ⬙
-                    <br />
-                    Sheepy Instagram ⬙ ⇥ http://mrsuicidesheep.com/insta ⬘
-                    <br />
-                    Spotify: Channel Uploads ⬘ ⇥<br />
-                    http://mrsuicidesheep.com/channeluploads ⬗ Spotify:
-                    <br />
-                    Seeking Blue ⬗ ⇥ http://mrsuicidesheep.com/skblueplaylist
-                  </p>
+                  {this.state.videoData.description}
                 </div>
                 <button
                   type="button"
@@ -287,8 +315,9 @@ class Watch extends Component {
                       <TextareaAutosize
                         className="form-control"
                         placeholder={t("pages.watch.commentPlaceHolder")}
-                        rows="1"
+                        rows={1}
                       />
+                      <small>Voce tem 500 caracteres restantes.</small>
                     </div>
                   </div>
                 ) : (

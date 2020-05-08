@@ -9,7 +9,7 @@ import { isAuthenticated } from "../../services/auth";
 
 import { withTranslation } from "react-i18next";
 
-import api from "../../services/api";
+import net from "../../services/net";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 import styles from "../Login/login.module.scss";
@@ -105,7 +105,7 @@ class Register extends Component {
     }
     try {
       this.setState({ loading: true });
-      const response = await api.post("/api/register", {
+      const response = await net.post("/api/register", {
         username,
         email,
         password,

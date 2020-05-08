@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import api from "../../services/api";
+import api from "../../library/api";
 
 import VideoThumb from "../../components/VideoThumb";
 import Loading from "../Loading";
@@ -19,9 +19,7 @@ class Home extends Component {
   }
 
   async componentDidMount() {
-    console.log("Getting data...");
-    const response = await api.get("/feed/newvideos");
-    console.log(response.data[0]);
+    const response = await api.getNewVideos();
     this.setState({
       isLoading: false,
       videos: response.data,
