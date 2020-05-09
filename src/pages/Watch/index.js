@@ -29,7 +29,9 @@ class Watch extends Component {
       title: "",
       channelName: "",
       channelLink: "",
-    }
+      channelFollowers: 0
+    },
+    tempComment: "",
   };
 
   follow = async (e) => {
@@ -94,6 +96,28 @@ class Watch extends Component {
     }
   };
 
+  sendComment = async (e) => {
+    e.preventDefault();
+    const { t } = this.props;
+    if(this.state.tempComment.length < 10) {
+      alert(t("errors.commentTooSmall"));
+      return;
+    }
+    if(this.state.tempComment.length > 500) {
+      alert(t("errors.commentTooBig"));
+      return;
+    }
+    const response = await api.sendComment(this.state.videoData.id, this.state.tempComment);
+    if(response.data.success) {
+      this.setState({
+        tempComment: ""
+      })
+      // TODO: Add to comments
+    } else {
+      alert(t(response.data.message));
+    }
+  };
+
   async componentDidMount() {
     const response = await api.getVideo(this.props.match.params.id);
     if (response.data.userInfo === undefined) {
@@ -128,11 +152,11 @@ class Watch extends Component {
         onChange: null,
       },*/
     });
-    
+
     this.setState({
       player: player,
       sourceData: [
-        {
+        /*{
           src: "http://localhost:3000/assets/video/1080.mpd",
           size: 1080,
           mode: "mpd", // How to analyze
@@ -141,9 +165,9 @@ class Watch extends Component {
           src: "http://localhost:3000/assets/video/480.mpd",
           size: 480,
           mode: "mpd", // How to analyze
-        }
-      ]
-    })
+        }*/
+      ],
+    });
 
     player.source = {
       // type: 'audio',
@@ -152,7 +176,7 @@ class Watch extends Component {
       sources: this.state.sourceData,
     };
 
-    player.on('qualitychange', event => {
+    player.on("qualitychange", (event) => {
       this.initPlayer();
     });
     this.initPlayer();
@@ -162,20 +186,25 @@ class Watch extends Component {
     const { sourceData, player } = this.state;
     console.log(player);
     $.each(sourceData, function () {
-      const video = document.querySelector('video');
+      const video = document.querySelector("video");
       $.each(sourceData, function () {
-          // dash Adaptation
-          if (this.mode === 'mpd' && this.size === player.config.quality.selected) {
-              // For more dash options, see https://github.com/Dash-Industry-Forum/dash.js
-              const dash = dashjs.MediaPlayer().create();
-              dash.updateSettings({ debug: { logLevel: dashjs.Debug.LOG_LEVEL_NONE } });
-              dash.initialize(video, this.src, true);
-              // Expose player and dash so they can be used from the console
-              window.player = player;
-              window.dash = dash;
-          }
-      })
-    })
+        // dash Adaptation
+        if (
+          this.mode === "mpd" &&
+          this.size === player.config.quality.selected
+        ) {
+          // For more dash options, see https://github.com/Dash-Industry-Forum/dash.js
+          const dash = dashjs.MediaPlayer().create();
+          dash.updateSettings({
+            debug: { logLevel: dashjs.Debug.LOG_LEVEL_NONE },
+          });
+          dash.initialize(video, this.src, true);
+          // Expose player and dash so they can be used from the console
+          window.player = player;
+          window.dash = dash;
+        }
+      });
+    });
   }
 
   render() {
@@ -224,7 +253,7 @@ class Watch extends Component {
                     </div>
                     <div className={styles.channelFollowers}>
                       {t("pages.watch.followers", {
-                        countText: numberToText(108_000),
+                        countText: numberToText(this.state.videoData.channelFollowers),
                       })}
                     </div>
                   </div>
@@ -249,6 +278,10 @@ class Watch extends Component {
                     />
                     &nbsp;&nbsp; {t("shared.dislike")}
                   </button>
+                  <button type="button" className="btn">
+                    <FontAwesomeIcon icon="share" className={styles.icon} />
+                    &nbsp;&nbsp; {t("shared.share")}
+                  </button>
                   <button
                     type="button"
                     className="btn"
@@ -257,10 +290,6 @@ class Watch extends Component {
                     title={t("shared.report")}
                   >
                     <FontAwesomeIcon icon="flag" className={styles.icon} />
-                  </button>
-                  <button type="button" className="btn btn-outline-danger">
-                    <FontAwesomeIcon icon="share" className={styles.icon} />
-                    &nbsp;&nbsp; {t("shared.share")}
                   </button>
                   <button
                     type="button"
@@ -311,13 +340,30 @@ class Watch extends Component {
                       src="https://randomuser.me/api/portraits/men/65.jpg"
                       alt="profile pic"
                     />
-                    <div className="media-body">
+                    <div className={`${styles.authComment} media-body`}>
                       <TextareaAutosize
                         className="form-control"
                         placeholder={t("pages.watch.commentPlaceHolder")}
                         rows={1}
+                        onChange={(e) => {
+                          if (e.target.value.length > 500) {
+                            e.target.value = e.target.value.substring(0, 500);
+                          }
+                          this.setState({ tempComment: e.target.value });
+                        }}
+                        value={this.state.tempComment}
                       />
-                      <small>Voce tem 500 caracteres restantes.</small>
+                      <small>
+                        Voce tem {500 - this.state.tempComment.length}{" "}
+                        caracteres restantes.
+                      </small>
+                      <button
+                        className={`${styles.sendBtn} btn btn-primary btn-sm`}
+                        disabled={this.state.tempComment.length < 10}
+                        onClick={this.sendComment}
+                      >
+                        {t("pages.watch.send")}
+                      </button>
                     </div>
                   </div>
                 ) : (

@@ -6,9 +6,11 @@
       "history": "History",
       "home": "Home",
       "hot": "Hot",
+      "language": "Language",
       "live": "Live",
       "login": "Login",
       "logout": "Logout",
+      "profile": "Profile",
       "register": "Register",
       "search": "Search"
     },
@@ -21,6 +23,8 @@
     "accountBanned": "This account has been banned!",
     "accountNotActive": "Your email has not been verified, to resend the validation email click here",
     "birthDateEmpty": "Date of birth cannot be empty",
+    "commentTooBig": "The comment is too long, use a maximum of 500 characters.",
+    "commentTooSmall": "The comment is too short, use at least 10 characters.",
     "emailAlreadyRegistered": "This email is already registered.",
     "emailNotRegistered": "This email is not registered.",
     "failedToRegister": "Failed to register. Contact support and use ID: {{id}}",
@@ -84,6 +88,7 @@
         "toSend": "to post a comment",
         "youNeed": "You need"
       },
+      "send": "Send",
       "showDescription": "Show Description"
     }
   },

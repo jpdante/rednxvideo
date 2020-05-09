@@ -6,9 +6,11 @@
       "history": "Histórico",
       "home": "Inicio",
       "hot": "Em Alta",
+      "language": "Idioma",
       "live": "Ao Vivo",
       "login": "Entrar",
       "logout": "Sair",
+      "profile": "Perfil",
       "register": "Registrar",
       "search": "Pesquisar"
     },
@@ -21,6 +23,8 @@
     "accountBanned": "Está conta foi banida!",
     "accountNotActive": "O seu email não foi verificado, para reenviar o email de validação clique aqui",
     "birthDateEmpty": "A data de nascimento não pode ficar vazia",
+    "commentTooBig": "O comentário é muito grande, use no máximo 500 caracteres.",
+    "commentTooSmall": "O comentário é muito curto, use pelo menos 10 caracteres.",
     "emailAlreadyRegistered": "Este email já esta registrado.",
     "emailNotRegistered": "Este email não esta registrado.",
     "failedToRegister": "Ocorreu uma falha ao fazer o registro. Contate o suporte e use o ID: {{id}}",
@@ -84,6 +88,7 @@
         "toSend": "para enviar um comentario",
         "youNeed": "Você precisa"
       },
+      "send": "Enviar",
       "showDescription": "Mostrar Descrição"
     }
   },

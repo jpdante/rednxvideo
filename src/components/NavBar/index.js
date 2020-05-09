@@ -165,15 +165,15 @@ class NavBar extends Component {
                 className={`${styles.animate} ${styles.slideIn} dropdown-menu dropdown-menu-right`}
                 aria-labelledby="navbarDropdownMenuLink"
               >
-                <a className="dropdown-item" href="/">
-                  ... ?
-                </a>
-                <a className="dropdown-item" href="/">
-                  ... ?
-                </a>
-                <a className="dropdown-item" href="/" onClick={this.logout}>
+                <Link className="dropdown-item" to="/profile">
+                  {t("components.navbar.profile")}
+                </Link>
+                <Link className="dropdown-item" to="/language">
+                  {t("components.navbar.language")}
+                </Link>
+                <button className="dropdown-item" onClick={this.logout}>
                   {t("components.navbar.logout")}
-                </a>
+                </button>
               </div>
             </li>
           </ul>

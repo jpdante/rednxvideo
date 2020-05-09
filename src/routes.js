@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch/*, Redirect*/ } from "react-router-dom";
 
-//import { isAuthenticated } from "./services/auth";
+import api from "./library/api";
 
 import Home from "./pages/Home";
 import Discover from "./pages/Discover";
@@ -17,6 +17,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LoadingFullScreen from "./pages/LoadingFullScreen";
 import Loading from "./pages/Loading";
+import NotFound from "./pages/NotFound";
 
 import NavBar from "./components/NavBar";
 import SideBar from "./components/SideBar";
@@ -34,7 +35,9 @@ import SideBar from "./components/SideBar";
   />
 );*/
 
-const Routes = () => (
+const Routes = () => {
+  api.checkSession();
+  return (
   <BrowserRouter>
     <Suspense fallback={<LoadingFullScreen />}>
       <div className="content">
@@ -56,12 +59,12 @@ const Routes = () => (
             <Route path="/register" component={Register} />
             <Route path="/dev/loadingfs" component={LoadingFullScreen} />
             <Route path="/dev/loading" component={Loading} />
-            <Route path="*" component={() => <h1>Page not found</h1>} />
+            <Route path="*" component={NotFound} />
           </Switch>
         </div>
       </div>
     </Suspense>
   </BrowserRouter>
-);
+)};
 
 export default Routes;
