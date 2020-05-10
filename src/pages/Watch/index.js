@@ -29,7 +29,7 @@ class Watch extends Component {
       title: "",
       channelName: "",
       channelLink: "",
-      channelFollowers: 0
+      channelFollowers: 0,
     },
     tempComment: "",
   };
@@ -99,24 +99,49 @@ class Watch extends Component {
   sendComment = async (e) => {
     e.preventDefault();
     const { t } = this.props;
-    if(this.state.tempComment.length < 10) {
+    if (this.state.tempComment.length < 10) {
       alert(t("errors.commentTooSmall"));
       return;
     }
-    if(this.state.tempComment.length > 500) {
+    if (this.state.tempComment.length > 500) {
       alert(t("errors.commentTooBig"));
       return;
     }
-    const response = await api.sendComment(this.state.videoData.id, this.state.tempComment);
-    if(response.data.success) {
+    const response = await api.sendComment(
+      this.state.videoData.id,
+      this.state.tempComment
+    );
+    if (response.data.success) {
       this.setState({
-        tempComment: ""
-      })
+        tempComment: "",
+      });
       // TODO: Add to comments
     } else {
       alert(t(response.data.message));
     }
   };
+
+  getClassification(classification) {
+    if (classification === 0) return "L";
+    return classification;
+  }
+
+  getClassificationColor(classification) {
+    switch (classification) {
+      case 10:
+        return "#0F7DC2";
+      case 12:
+        return "#F8C411";
+      case 14:
+        return "#E67824";
+      case 16:
+        return "#DB2827";
+      case 18:
+        return "#1D1815";
+      default:
+        return "#0C9447";
+    }
+  }
 
   async componentDidMount() {
     const response = await api.getVideo(this.props.match.params.id);
@@ -231,7 +256,16 @@ class Watch extends Component {
               <div className={`${styles.videoIcon}`}>
                 <img src="https://picsum.photos/66/66" alt="game" />
               </div>
-              <div className={`${styles.videoClassification}`}>L</div>
+              <div
+                className={`${styles.videoClassification}`}
+                style={{
+                  backgroundColor: this.getClassificationColor(
+                    this.state.videoData.classification
+                  ),
+                }}
+              >
+                {this.getClassification(this.state.videoData.classification)}
+              </div>
               <div className={`${styles.videoTitle}`}>
                 <h5>{this.state.videoData.title}</h5>
               </div>
@@ -253,7 +287,9 @@ class Watch extends Component {
                     </div>
                     <div className={styles.channelFollowers}>
                       {t("pages.watch.followers", {
-                        countText: numberToText(this.state.videoData.channelFollowers),
+                        countText: numberToText(
+                          this.state.videoData.channelFollowers
+                        ),
                       })}
                     </div>
                   </div>

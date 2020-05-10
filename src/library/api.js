@@ -7,7 +7,7 @@ const api = {
       id: videoId,
       value: value,
     });
-    this.checkSession(response);
+    api.checkSession(response);
     return response;
   },
   updateFollow: async (channelId, value) => {
@@ -15,15 +15,15 @@ const api = {
       id: channelId,
       value: value,
     });
-    this.checkSession(response);
+    api.checkSession(response);
     return response;
   },
   sendComment: async (videoId, comment) => {
-    const response = await net.post("/video/comment", {
+    const response = await net.post("/comment/put", {
       id: videoId,
       comment: comment,
     });
-    this.checkSession(response);
+    api.checkSession(response);
     return response;
   },
   getVideo: async (id) => {
