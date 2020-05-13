@@ -5,14 +5,13 @@ import FadeIn from "react-fade-in";
 
 import { withTranslation } from "react-i18next";
 
-import { login, isAuthenticated } from "../../services/auth";
-import api from "../../library/api";
-
-
 import HCaptcha from "@hcaptcha/react-hcaptcha";
-import styles from "./login.module.scss";
+import net from "../../services/net";
+import { login, isAuthenticated } from "../../services/auth";
 
-class Login extends Component {
+import styles from "./newchannel.module.scss";
+
+class NewChannel extends Component {
   constructor(props) {
     super(props);
     this.hCaptchaRef = React.createRef();
@@ -47,10 +46,10 @@ class Login extends Component {
     }
     try {
       this.setState({ loading: true });
-      const response = await api.login({
+      const response = await net.post("/api/login", {
         email,
         password,
-        captcha
+        captcha,
       });
       this.setState({ loading: false });
       if (response.data.success) {
@@ -71,7 +70,7 @@ class Login extends Component {
   };
 
   render() {
-    if (isAuthenticated()) {
+    if (!isAuthenticated()) {
       return <Redirect to="/" />;
     } else {
       const { t } = this.props;
@@ -186,4 +185,4 @@ class Login extends Component {
   }
 }
 
-export default withTranslation()(Login);
+export default withTranslation()(NewChannel);

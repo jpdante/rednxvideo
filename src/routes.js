@@ -8,6 +8,7 @@ import Discover from "./pages/Discover";
 import Watch from "./pages/Watch";
 import Category from "./pages/Category";
 import Channel from "./pages/Channel";
+import NewChannel from "./pages/NewChannel";
 import Hot from "./pages/Hot";
 import Live from "./pages/Live";
 import Recommended from "./pages/Recommended";
@@ -57,6 +58,7 @@ const Routes = () => {
             <Route path="/following" component={Following} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
+            <Route path="/newchannel" component={NewChannel} />
             <Route path="/dev/loadingfs" component={LoadingFullScreen} />
             <Route path="/dev/loading" component={Loading} />
             <Route path="*" component={NotFound} />

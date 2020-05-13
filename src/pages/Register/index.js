@@ -6,10 +6,10 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 import { isAuthenticated } from "../../services/auth";
+import api from "../../library/api";
 
 import { withTranslation } from "react-i18next";
 
-import net from "../../services/net";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 import styles from "../Login/login.module.scss";
@@ -105,7 +105,7 @@ class Register extends Component {
     }
     try {
       this.setState({ loading: true });
-      const response = await net.post("/api/register", {
+      const response = await api.register({
         username,
         email,
         password,

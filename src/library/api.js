@@ -2,37 +2,14 @@ import net from "../services/net";
 import { logout, isAuthenticated } from "../services/auth";
 
 const api = {
-  updateLike: async (videoId, value) => {
-    const response = await net.post("/video/like", {
-      id: videoId,
-      value: value,
-    });
-    api.checkSession(response);
+  // ~~~~ AUTH ~~~~
+  register: async(data) => {
+    const response = await net.post("/api/register", data);
     return response;
   },
-  updateFollow: async (channelId, value) => {
-    const response = await net.post("/channel/follow", {
-      id: channelId,
-      value: value,
-    });
-    api.checkSession(response);
+  login: async(data) => {
+    const response = await net.post("/api/login", data);
     return response;
-  },
-  sendComment: async (videoId, comment) => {
-    const response = await net.post("/comment/put", {
-      id: videoId,
-      comment: comment,
-    });
-    api.checkSession(response);
-    return response;
-  },
-  getVideo: async (id) => {
-    return await net.post("/video/get", { 
-      id: id
-    });
-  },
-  getNewVideos: async() => {
-    return await net.get("/feed/newvideos");
   },
   checkSession: async(response) => {
     if(!isAuthenticated()) return;
@@ -48,7 +25,47 @@ const api = {
         window.location.reload();
       }
     }
-  }
+  },
+  // ~~~~ CHANNEL ~~~~
+  newChannel: async(data) => {
+    const response = await net.post("/api/login", data);
+    return response;
+  },
+  updateFollow: async (channelId, value) => {
+    const response = await net.post("/channel/follow", {
+      id: channelId,
+      value: value,
+    });
+    api.checkSession(response);
+    return response;
+  },
+  // ~~~~ VIDEO ~~~~
+  updateLike: async (videoId, value) => {
+    const response = await net.post("/video/like", {
+      id: videoId,
+      value: value,
+    });
+    api.checkSession(response);
+    return response;
+  },
+  getVideo: async (id) => {
+    return await net.post("/video/get", { 
+      id: id
+    });
+  },
+  // ~~~~ COMMENT ~~~~
+  sendComment: async (videoId, comment) => {
+    const response = await net.post("/comment/put", {
+      id: videoId,
+      comment: comment,
+    });
+    api.checkSession(response);
+    return response;
+  },
+  // ~~~~ FEED ~~~~
+  getNewVideos: async() => {
+    return await net.get("/feed/newvideos");
+  },
 };
 
 export default api;
