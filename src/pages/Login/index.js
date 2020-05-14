@@ -8,7 +8,6 @@ import { withTranslation } from "react-i18next";
 import { login, isAuthenticated } from "../../services/auth";
 import api from "../../library/api";
 
-
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import styles from "./login.module.scss";
 
@@ -50,7 +49,7 @@ class Login extends Component {
       const response = await api.login({
         email,
         password,
-        captcha
+        captcha,
       });
       this.setState({ loading: false });
       if (response.data.success) {
@@ -168,11 +167,15 @@ class Login extends Component {
                   </button>
                   <div className="text-center my-3">
                     <p>
-                      This site is protected by hCaptcha and its{" "}
-                      <a href="https://hcaptcha.com/privacy">Privacy Policy</a>{" "}
-                      and{" "}
-                      <a href="https://hcaptcha.com/terms">Terms of Service</a>{" "}
-                      apply.
+                      {t("hcaptcha.msg1")}{" "}
+                      <a href="https://hcaptcha.com/privacy">
+                        {t("hcaptcha.privacyPolicy")}
+                      </a>{" "}
+                      {t("hcaptcha.msg2")}{" "}
+                      <a href="https://hcaptcha.com/terms">
+                        {t("hcaptcha.termsOfService")}
+                      </a>{" "}
+                      {t("hcaptcha.msg3")}
                     </p>
                   </div>
                 </form>

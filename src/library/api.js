@@ -4,11 +4,11 @@ import { logout, isAuthenticated } from "../services/auth";
 const api = {
   // ~~~~ AUTH ~~~~
   register: async(data) => {
-    const response = await net.post("/api/register", data);
+    const response = await net.post("/auth/register", data);
     return response;
   },
   login: async(data) => {
-    const response = await net.post("/api/login", data);
+    const response = await net.post("/auth/login", data);
     return response;
   },
   checkSession: async(response) => {
@@ -27,8 +27,18 @@ const api = {
     }
   },
   // ~~~~ CHANNEL ~~~~
-  newChannel: async(data) => {
-    const response = await net.post("/api/login", data);
+  newChannel: async(channelName, channelLink, captcha) => {
+    const response = await net.post("/channel/new", {
+      channelName: channelName,
+      channelLink: channelLink,
+      captcha: captcha
+    });
+    api.checkSession(response);
+    return response;
+  },
+  canCreateNewChannel: async() => {
+    const response = await net.get("/channel/cancreate");
+    api.checkSession(response);
     return response;
   },
   updateFollow: async (channelId, value) => {

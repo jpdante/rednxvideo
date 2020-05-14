@@ -21,30 +21,51 @@
   },
   "errors": {
     "accountBanned": "Está conta foi banida!",
-    "accountNotActive": "O seu email não foi verificado, para reenviar o email de validação clique aqui",
-    "birthDateEmpty": "A data de nascimento não pode ficar vazia",
+    "accountNotActive": "O seu email não foi verificado, para reenviar o email de validação clique aqui.",
+    "alreadyLoggedIn": "Você já está logado! Saia primeiro.",
+    "birthDateEmpty": "A data de nascimento não pode ficar vazia.",
+    "channelLinkAlreadyExists": "Um canal com este link já existe.",
+    "channelLinkEmpty": "O link do canal não pode ficar em branco.",
+    "channelNameEmpty": "O nome do canal não pode ficar em branco.",
     "commentTooBig": "O comentário é muito grande, use no máximo 500 caracteres.",
     "commentTooSmall": "O comentário é muito curto, use pelo menos 10 caracteres.",
     "emailAlreadyRegistered": "Este email já esta registrado.",
     "emailNotRegistered": "Este email não esta registrado.",
+    "failedParsingData": "Falha ao analisar dados.",
     "failedToRegister": "Ocorreu uma falha ao fazer o registro. Contate o suporte e use o ID: {{id}}",
     "fieldsMissing": "Existem campos faltando.",
     "incorrectPassword": "A senha está incorreta!",
+    "internalServerError": "Erro interno do servidor, tente novamente mais tarde. Se o problema persistir, contate o suporte.",
     "invalidBirthDate": "Data de Nascimento inválida!",
     "invalidEmail": "Este email é invalido!",
+    "invalidSession": "Sessão inválida.",
     "invalidUsername": "Este nome de usuário é invalido!",
     "loginError": "Houve um problema ao iniciar a sessão, verifique as suas credenciais, se o problema persistir por favor contate o suporte.",
+    "maxChannelsHit": "Você atingiu o limite maximo de canais.",
+    "operationDenied": "Operação negada!",
     "passwordEmpty": "A senha não pode ficar em branco.",
     "passwordsDontMatch": "As senhas não são iguais.",
+    "unknownApi": "Erro, API desconhecida.",
     "usernameAlreadyRegistered": "Este nome de usuário já esta registrado.",
     "usernameEmpty": "O nome de usuário não pode ficar em branco.",
-    "usernameInvalid": "Nome do usuário inválido, só são aceitos numeros, letras, tracos, sublinhados e pontos",
+    "usernameInvalid": "Nome do usuário inválido, só são aceitos numeros, letras, tracos, sublinhados e pontos.",
     "usernameSize": "O nome de usuário deve conter entre 3 a 20 caracteres."
+  },
+  "hcaptcha": {
+    "msg1": "Este site é protegido pelo hCaptcha e sua",
+    "msg2": "e",
+    "msg3": "se aplicam.",
+    "privacyPolicy": "Política de Privacidade",
+    "termsOfService": "Termos de Serviço"
   },
   "modals": {
     "accountCreated": "Conta criada! Verifique o seu email para validar a sua conta.",
     "alreadyHasAccount": "Já possui uma conta ?",
     "birthDate": "Data de Nascimento",
+    "channelLink": "Link do canal",
+    "channelLinkMaxLength": "O link do canal só pode ter no maximo 16 caracteres",
+    "channelName": "Nome do canal",
+    "channelNameMaxLength": "O nome do canal só pode ter no maximo 32 caracteres",
     "confirmPassword": "Confirmar Senha",
     "email": "Email",
     "forgotPassword": "Esqueceu a sua senha ?",
@@ -75,6 +96,10 @@
     },
     "live": {
       "error": "Ainda não suportamos lives, mas fique tranquilo, estamos trabalhando nisso :)"
+    },
+    "newChannel": {
+      "createChannel": "Criar canal",
+      "newChannel": "Novo Canal"
     },
     "recommended": {
       "title": "Recomendados"

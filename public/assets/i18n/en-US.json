@@ -21,30 +21,51 @@
   },
   "errors": {
     "accountBanned": "This account has been banned!",
-    "accountNotActive": "Your email has not been verified, to resend the validation email click here",
-    "birthDateEmpty": "Date of birth cannot be empty",
+    "accountNotActive": "Your email has not been verified, to resend the validation email click here.",
+    "alreadyLoggedIn": "You are already logged in! Please logout first.",
+    "birthDateEmpty": "Date of birth cannot be empty.",
+    "channelLinkAlreadyExists": "A channel with this link already exists.",
+    "channelLinkEmpty": "Channel link cannot be empty.",
+    "channelNameEmpty": "Channel name cannot be empty.",
     "commentTooBig": "The comment is too long, use a maximum of 500 characters.",
     "commentTooSmall": "The comment is too short, use at least 10 characters.",
     "emailAlreadyRegistered": "This email is already registered.",
     "emailNotRegistered": "This email is not registered.",
+    "failedParsingData": "Failed parsing data.",
     "failedToRegister": "Failed to register. Contact support and use ID: {{id}}",
     "fieldsMissing": "There are fields missing.",
     "incorrectPassword": "The password is incorrect!",
+    "internalServerError": "Internal server error, please try again later. If the problem persists, contact support.",
     "invalidBirthDate": "Invalid date of birth!",
     "invalidEmail": "This email is invalid!",
+    "invalidSession": "Invalid session.",
     "invalidUsername": "This username is invalid!",
     "loginError": "There was a problem signing in, check your credentials, if the problem persists please contact support.",
+    "maxChannelsHit": "You have reached the maximum channel limit.",
+    "operationDenied": "Operation denied!",
     "passwordEmpty": "The password cannot be empty.",
     "passwordsDontMatch": "Passwords are not the same.",
+    "unknownApi": "Error, unknown API.",
     "usernameAlreadyRegistered": "This username is already registered.",
     "usernameEmpty": "Username cannot be empty.",
-    "usernameInvalid": "Username invalid, only numbers, letters, dashes, underscores and periods are accepted",
+    "usernameInvalid": "Username invalid, only numbers, letters, dashes, underscores and periods are accepted.",
     "usernameSize": "The username must contain between 3 and 20 characters."
+  },
+  "hcaptcha": {
+    "msg1": "This site is protected by hCaptcha and its",
+    "msg2": "and",
+    "msg3": "apply.",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service"
   },
   "modals": {
     "accountCreated": "Account created! Check your email to validate your account.",
     "alreadyHasAccount": "Already have an account?",
     "birthDate": "Date of Birth",
+    "channelLink": "Channel link",
+    "channelLinkMaxLength": "Channel link can only have a maximum of 16 characters",
+    "channelName": "Channel name",
+    "channelNameMaxLength": "Channel name can only have a maximum of 32 characters",
     "confirmPassword": "Confirm Password",
     "email": "Email",
     "forgotPassword": "Forgot your password ?",
@@ -75,6 +96,10 @@
     },
     "live": {
       "error": "We don't support lives yet, but rest assured, we're working on it :)"
+    },
+    "newChannel": {
+      "createChannel": "Create channel",
+      "newChannel": "New Channel"
     },
     "recommended": {
       "title": "Recommended"

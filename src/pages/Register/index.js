@@ -289,6 +289,19 @@ class Register extends Component {
                       t("components.navbar.register")
                     )}
                   </button>
+                  <div className="text-center my-3">
+                    <p>
+                      {t("hcaptcha.msg1")}{" "}
+                      <a href="https://hcaptcha.com/privacy">
+                        {t("hcaptcha.privacyPolicy")}
+                      </a>{" "}
+                      {t("hcaptcha.msg2")}{" "}
+                      <a href="https://hcaptcha.com/terms">
+                        {t("hcaptcha.termsOfService")}
+                      </a>{" "}
+                      {t("hcaptcha.msg3")}
+                    </p>
+                  </div>
                 </form>
                 <hr />
               </div>

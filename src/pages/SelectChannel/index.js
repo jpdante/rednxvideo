@@ -10,9 +10,9 @@ import Loading from "../Loading/";
 import api from "../../library/api";
 import { login, isAuthenticated } from "../../services/auth";
 
-import styles from "./newchannel.module.scss";
+import styles from "./selectchannel.module.scss";
 
-class NewChannel extends Component {
+class SelectChannel extends Component {
   constructor(props) {
     super(props);
     this.hCaptchaRef = React.createRef();
@@ -66,12 +66,13 @@ class NewChannel extends Component {
       this.setState({ loading: true });
       const response = await api.newChannel(channelName, channelLink, captcha);
       this.setState({ loading: false });
+      console.log(response);
       if (response.data.success) {
         this.setState({
           error: "",
           errorData: {}
         });
-        this.props.history.push("/select-channel")
+        this.context.router.push('/select-channel');
       } else {
         this.setState({
           error: response.data.message,
@@ -83,7 +84,6 @@ class NewChannel extends Component {
       this.setState({
         error: "errors.loginError",
       });
-      console.error(err);
     }
   };
 
@@ -250,4 +250,4 @@ class NewChannel extends Component {
   }
 }
 
-export default withTranslation()(NewChannel);
+export default withTranslation()(SelectChannel);
