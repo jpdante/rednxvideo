@@ -30,12 +30,15 @@ class Watch extends Component {
       channelName: "",
       channelLink: "",
       channelFollowers: 0,
+      classification: 0,
     },
+    comments: [],
     tempComment: "",
   };
 
   follow = async (e) => {
     e.preventDefault();
+    if (!this.state.isAuthenticated) return;
     if (this.state.following) {
       this.setState({
         following: false,
@@ -64,6 +67,7 @@ class Watch extends Component {
 
   like = async (e) => {
     e.preventDefault();
+    if (!this.state.isAuthenticated) return;
     if (this.state.like) {
       this.setState({
         like: false,
@@ -81,6 +85,7 @@ class Watch extends Component {
 
   dislike = async (e) => {
     e.preventDefault();
+    if (!this.state.isAuthenticated) return;
     if (this.state.dislike) {
       this.setState({
         like: false,
@@ -98,6 +103,7 @@ class Watch extends Component {
 
   sendComment = async (e) => {
     e.preventDefault();
+    if (!this.state.isAuthenticated) return;
     const { t } = this.props;
     if (this.state.tempComment.length < 10) {
       alert(t("errors.commentTooSmall"));
@@ -112,10 +118,20 @@ class Watch extends Component {
       this.state.tempComment
     );
     if (response.data.success) {
+      var commentsArray = this.state.comments;
+      commentsArray.unshift({
+        id: response.data.id,
+        msg: this.state.tempComment,
+        likes: 0,
+        dislikes: 0,
+        accountUsername: localStorage.getItem("username"),
+        accountPicture: localStorage.getItem("profilePicture"),
+        isLiked: null
+      });
       this.setState({
+        comments: commentsArray,
         tempComment: "",
       });
-      // TODO: Add to comments
     } else {
       alert(t(response.data.message));
     }
@@ -144,19 +160,49 @@ class Watch extends Component {
   }
 
   async componentDidMount() {
-    const response = await api.getVideo(this.props.match.params.id);
-    if (response.data.userInfo === undefined) {
-      this.setState({
-        isLoading: false,
-        videoData: response.data.video,
-      });
+    var response = await api.getVideo(this.props.match.params.id);
+    if (response.data.success) {
+      if (response.data.userInfo === undefined) {
+        this.setState({
+          isLoading: false,
+          videoData: response.data.video,
+        });
+      } else {
+        this.setState({
+          isLoading: false,
+          like: response.data.userInfo.liked,
+          dislike: response.data.userInfo.disliked,
+          following: response.data.userInfo.following,
+          videoData: response.data.video,
+          comments: [],
+        });
+      }
+      response = await api.getComments(this.state.videoData.id);
+      if (response.data.success) {
+        var commentsArray = this.state.comments;
+        response.data.comments.forEach((comment) => {
+          commentsArray.push(comment);
+        });
+        this.setState({
+          comments: commentsArray,
+        });
+      } else {
+        console.error("Failed to get comments!");
+        console.error(response.data);
+      }
     } else {
       this.setState({
         isLoading: false,
-        like: response.data.userInfo.liked,
-        dislike: response.data.userInfo.disliked,
-        following: response.data.userInfo.following,
-        videoData: response.data.video,
+        like: 0,
+        dislike: 0,
+        following: 0,
+        videoData: {
+          title: "Couldn't load video!",
+          channelName: "Couldn't load channel!",
+          channelLink: "/",
+          channelFollowers: 0,
+          classification: 0,
+        },
       });
     }
     //const source = "https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd";
@@ -250,11 +296,11 @@ class Watch extends Component {
               controls
               crossOrigin="true"
               playsInline
-              poster="https://bitdash-a.akamaihd.net/content/sintel/poster.png"
+              poster={`/assets/${this.state.videoData.thumb}`}
             ></video>
             <div className={`${styles.videoTitleContainer}`}>
               <div className={`${styles.videoIcon}`}>
-                <img src="https://picsum.photos/66/66" alt="game" />
+                <img src={`/assets/${this.state.videoData.icon}`} alt="game" />
               </div>
               <div
                 className={`${styles.videoClassification}`}
@@ -275,7 +321,7 @@ class Watch extends Component {
                 <div className={`${styles.channelImage} col-lg-12 col-xl-6`}>
                   <Link to={`/channel/${this.state.videoData.channelLink}`}>
                     <img
-                      src="https://picsum.photos/256/256"
+                      src={`/assets/${this.state.videoData.channelPicture}`}
                       alt="Avatar do Canal"
                     />
                   </Link>
@@ -373,7 +419,7 @@ class Watch extends Component {
                 {this.state.isAuthenticated ? (
                   <div className={`${styles.media} media`}>
                     <img
-                      src="https://randomuser.me/api/portraits/men/65.jpg"
+                      src={`/assets/${localStorage.getItem("profilePicture")}`}
                       alt="profile pic"
                     />
                     <div className={`${styles.authComment} media-body`}>
@@ -417,45 +463,15 @@ class Watch extends Component {
                 )}
               </div>
               <ul className="list-unstyled">
-                <li className={`${styles.media} media`}>
-                  <img src="https://picsum.photos/67/67" alt="..." />
-                  <div className="media-body">
-                    <a className="mt-0 mb-1" href="/">
-                      Nome do Canal
-                    </a>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                    scelerisque ante sollicitudin. Cras purus odio, vestibulum
-                    in vulputate at, tempus viverra turpis. Fusce condimentum
-                    nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                    in faucibus.
-                  </div>
-                </li>
-                <li className={`${styles.media} media`}>
-                  <img src="https://picsum.photos/76/76" alt="..." />
-                  <div className="media-body">
-                    <a className="mt-0 mb-1" href="/">
-                      Nome do Canal
-                    </a>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                    scelerisque ante sollicitudin. Cras purus odio, vestibulum
-                    in vulputate at, tempus viverra turpis. Fusce condimentum
-                    nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                    in faucibus.
-                  </div>
-                </li>
-                <li className={`${styles.media} media`}>
-                  <img src="https://picsum.photos/86/86" alt="..." />
-                  <div className="media-body">
-                    <a className="mt-0 mb-1" href="/">
-                      Nome do Canal
-                    </a>
-                    Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                    scelerisque ante sollicitudin. Cras purus odio, vestibulum
-                    in vulputate at, tempus viverra turpis. Fusce condimentum
-                    nunc ac nisi vulputate fringilla. Donec lacinia congue felis
-                    in faucibus.
-                  </div>
-                </li>
+                {this.state.comments.map((comment) => (
+                  <li className={`${styles.media} media`} key={comment.id}>
+                    <img src={`/assets/${comment.accountPicture}`} alt="..." />
+                    <div className="media-body">
+                      <a className="mt-0 mb-1">{comment.accountUsername}</a>
+                      {comment.msg}
+                    </div>
+                  </li>
+                ))}
               </ul>
             </div>
           </div>

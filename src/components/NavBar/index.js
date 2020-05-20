@@ -153,7 +153,7 @@ class NavBar extends Component {
               >
                 <div>
                   <img
-                    src="https://randomuser.me/api/portraits/men/65.jpg"
+                    src={`/assets/${localStorage.getItem("profilePicture")}`}
                     width="30"
                     height="30"
                     className="rounded mx-auto d-inline-block align-top"

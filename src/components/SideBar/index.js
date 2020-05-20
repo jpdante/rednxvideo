@@ -69,7 +69,7 @@ class SideBar extends Component {
           <nav className={`${styles.navVertical} nav flex-column`}>
             <p>{t("components.navbar.following")}</p>
             <li className={`${styles.navTable}`}>
-              <Link className={`${styles.navLink} nav-link`} to="/channel/pentagramasg">
+              <Link className={`${styles.navLink} nav-link`} to="/channel/pentagrama">
                 <div className="float-left">
                   <img
                     src="https://yt3.ggpht.com/a/AATXAJyVzvS5VwifcSWwYzMSjz0SjtKCNuQ3cjcQ7Q=s288-c-k-c0xffffffff-no-rj-mo"

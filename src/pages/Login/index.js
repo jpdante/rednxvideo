@@ -54,6 +54,8 @@ class Login extends Component {
       this.setState({ loading: false });
       if (response.data.success) {
         login(response.data.token);
+        localStorage.setItem("username", response.data.account.username);
+        localStorage.setItem("profilePicture", response.data.account.profilePicture);
         window.location.reload();
       } else {
         this.setState({

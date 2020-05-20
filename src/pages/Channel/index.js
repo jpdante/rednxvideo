@@ -11,6 +11,8 @@ import { isAuthenticated } from "../../services/auth";
 
 import FadeIn from "react-fade-in";
 import VideoThumb from "../../components/VideoThumb";
+import Loading from "../Loading";
+import api from "../../library/api";
 
 import styles from "./channel.module.scss";
 
@@ -21,77 +23,34 @@ class Channel extends Component {
     following: false,
     showDescription: false,
     isAuthenticated: isAuthenticated(),
-    channel: this.props.match.params.channel,
+    channelLink: this.props.match.params.channel,
+    isLoading: true,
+    channel: {
+      id: 0,
+      name: "",
+      link: "",
+      picture: "",
+      followers: 0,
+      views: 0,
+      following: false,
+    },
   };
 
-  componentWillReceiveProps(nextProps) {
+  async componentWillReceiveProps(nextProps) {
     this.setState({
       like: false,
       dislike: false,
       following: false,
       showDescription: false,
       isAuthenticated: isAuthenticated(),
-      channel: nextProps.match.params.channel,
+      channelLink: nextProps.match.params.channel,
+      isLoading: true,
     });
+    await this.loadChannel();
   }
 
-  follow = async (e) => {
-    e.preventDefault();
-    if (this.state.following) {
-      this.setState({
-        following: false,
-      });
-    } else {
-      this.setState({
-        following: true,
-      });
-    }
-  };
-
-  toggleDescription = async (e) => {
-    e.preventDefault();
-    if (this.state.showDescription) {
-      this.setState({
-        showDescription: false,
-      });
-    } else {
-      this.setState({
-        showDescription: true,
-      });
-    }
-  };
-
-  like = async (e) => {
-    e.preventDefault();
-    if (this.state.like) {
-      this.setState({
-        like: false,
-        dislike: false,
-      });
-    } else {
-      this.setState({
-        like: true,
-        dislike: false,
-      });
-    }
-  };
-
-  dislike = async (e) => {
-    e.preventDefault();
-    if (this.state.dislike) {
-      this.setState({
-        like: false,
-        dislike: false,
-      });
-    } else {
-      this.setState({
-        like: false,
-        dislike: true,
-      });
-    }
-  };
-
-  componentDidMount() {
+  async componentDidMount() {
+    await this.loadChannel();
     //const source = "https://bitmovin-a.akamaihd.net/content/sintel/sintel.mpd";
     // For more dash options, see https://github.com/Dash-Industry-Forum/dash.js
     //const dash = dashjs.MediaPlayer().create();
@@ -111,174 +70,203 @@ class Channel extends Component {
     //window.dash = dash;
   }
 
+  async loadChannel() {
+    const response = await api.getChannel(this.state.channelLink);
+    if (response.data.success) {
+      this.setState({
+        isLoading: false,
+        channel: response.data.channel,
+      });
+    } else {
+      console.error("Failed to get channel '" + this.state.channelLink + "'");
+      this.setState({
+        isLoading: true,
+        channel: {
+          id: 0,
+          name: "",
+          link: "",
+          picture: "",
+          followers: 0,
+          views: 0,
+          following: false,
+        },
+      });
+    }
+  }
+
+  follow = async (e) => {
+    e.preventDefault();
+    if (!isAuthenticated()) return;
+    var channel = this.state.channel;
+    if (this.state.channel.following) {
+      channel.following = false;
+      await api.updateFollow(this.state.channel.id, false);
+    } else {
+      channel.following = true;
+      await api.updateFollow(this.state.channel.id, true);
+    }
+    this.setState({
+      channel: channel,
+    });
+  };
+
   render() {
     const { t } = this.props;
-    return (
-      <FadeIn className={`page-content ${styles.replacePadding}`}>
-        <img
-          className={styles.cover}
-          src="https://picsum.photos/1920/200"
-          alt="capa"
-        />
-        <div className={styles.contentPadding}>
-          <div className={styles.channelMenu}>
-            <div className={`row`}>
-              <div className={`${styles.channelLogo} col-lg-12 col-xl-6`}>
-                <img
-                  src="https://picsum.photos/256/256"
-                  alt="Avatar do Canal"
-                />
-                <div className={styles.channelNameContainer}>
-                  <div className={styles.channelName}>
-                    <Link to={`/channel/${this.state.channel}`}>
-                      {this.state.channel}
-                    </Link>
-                  </div>
-                  <div className={styles.channelFollowers}>
-                    {t("pages.watch.followers", {
-                      countText: numberToText(108_000),
-                    })}
+    if (this.state.isLoading) {
+      return <Loading />;
+    } else {
+      return (
+        <FadeIn className={`page-content ${styles.replacePadding}`}>
+          <img
+            className={styles.cover}
+            src={`/assets/${this.state.channel.cover}`}
+            alt="capa"
+          />
+          <div className={styles.contentPadding}>
+            <div className={styles.channelMenu}>
+              <div className={`row`}>
+                <div className={`${styles.channelLogo} col-lg-12 col-xl-6`}>
+                  <img
+                    src={`/assets/${this.state.channel.picture}`}
+                    alt="Avatar do Canal"
+                  />
+                  <div className={styles.channelNameContainer}>
+                    <div className={styles.channelName}>
+                      <Link to={`/channel/${this.state.channel.link}`}>
+                        {this.state.channel.name}
+                      </Link>
+                    </div>
+                    <div className={styles.channelFollowers}>
+                      {t("pages.watch.followers", {
+                        countText: numberToText(this.state.channel.followers),
+                      })}
+                    </div>
                   </div>
                 </div>
+                <div className={`${styles.channelButtons} col-lg-12 col-xl-6`}>
+                  {isAuthenticated() && (
+                    <button
+                      type="button"
+                      className={`btn ${
+                        this.state.channel.following
+                          ? "btn-primary"
+                          : "btn-outline-primary"
+                      }`}
+                      onClick={this.follow}
+                    >
+                      <FontAwesomeIcon icon="heart" className={styles.icon} />
+                      &nbsp;&nbsp;{" "}
+                      {this.state.channel.following
+                        ? t("shared.following")
+                        : t("shared.follow")}
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    className="btn"
+                    data-toggle="modal"
+                    data-target="#reportModal"
+                    title={t("shared.report")}
+                  >
+                    <FontAwesomeIcon icon="flag" className={styles.icon} />
+                  </button>
+                </div>
               </div>
-              <div className={`${styles.channelButtons} col-lg-12 col-xl-6`}>
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={this.follow}
-                >
-                  <FontAwesomeIcon icon="heart" className={styles.icon} />
-                  &nbsp;&nbsp;{" "}
-                  {this.state.following
-                    ? t("shared.following")
-                    : t("shared.follow")}
-                </button>
-                <button
-                  type="button"
-                  className="btn"
-                  data-toggle="modal"
-                  data-target="#reportModal"
-                  title={t("shared.report")}
-                >
-                  <FontAwesomeIcon icon="flag" className={styles.icon} />
-                </button>
-              </div>
+              <ul
+                className="nav nav-pills mb-3 justify-content-center"
+                id="pills-tab"
+                role="tablist"
+              >
+                <li className="nav-item">
+                  <a
+                    className="nav-link active"
+                    id="pills-home-tab"
+                    data-toggle="pill"
+                    href="#pills-home"
+                    role="tab"
+                    aria-controls="pills-home"
+                    aria-selected="true"
+                  >
+                    Home
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    id="pills-profile-tab"
+                    data-toggle="pill"
+                    href="#pills-profile"
+                    role="tab"
+                    aria-controls="pills-profile"
+                    aria-selected="false"
+                  >
+                    Videos
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link"
+                    id="pills-contact-tab"
+                    data-toggle="pill"
+                    href="#pills-contact"
+                    role="tab"
+                    aria-controls="pills-contact"
+                    aria-selected="false"
+                  >
+                    Contact
+                  </a>
+                </li>
+              </ul>
             </div>
-            <ul
-              className="nav nav-pills mb-3 justify-content-center"
-              id="pills-tab"
-              role="tablist"
-            >
-              <li className="nav-item">
-                <a
-                  className="nav-link active"
-                  id="pills-home-tab"
-                  data-toggle="pill"
-                  href="#pills-home"
-                  role="tab"
-                  aria-controls="pills-home"
-                  aria-selected="true"
-                >
-                  Home
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  id="pills-profile-tab"
-                  data-toggle="pill"
-                  href="#pills-profile"
-                  role="tab"
-                  aria-controls="pills-profile"
-                  aria-selected="false"
-                >
-                  Videos
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  id="pills-contact-tab"
-                  data-toggle="pill"
-                  href="#pills-contact"
-                  role="tab"
-                  aria-controls="pills-contact"
-                  aria-selected="false"
-                >
-                  Contact
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div className="tab-content" id="pills-tabContent">
-            <div
-              className="tab-pane fade show active text-center"
-              id="pills-home"
-              role="tabpanel"
-              aria-labelledby="pills-home-tab"
-            >
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <h4>Custom Content</h4>
-              {/*<div className="row">
+            <div className="tab-content" id="pills-tabContent">
+              <div
+                className="tab-pane fade show active text-center"
+                id="pills-home"
+                role="tabpanel"
+                aria-labelledby="pills-home-tab"
+              >
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <h4>Custom Content</h4>
+                {/*<div className="row">
                     <VideoThumb />
                     <VideoThumb />
                     <VideoThumb />
                     <VideoThumb />
                       </div>*/}
-            </div>
-            <div
-              className="tab-pane fade"
-              id="pills-profile"
-              role="tabpanel"
-              aria-labelledby="pills-profile-tab"
-            >
-              <div className="row">
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
-                <VideoThumb />
+              </div>
+              <div
+                className="tab-pane fade"
+                id="pills-profile"
+                role="tabpanel"
+                aria-labelledby="pills-profile-tab"
+              >
+                <div className="row"></div>
+              </div>
+              <div
+                className="tab-pane fade"
+                id="pills-contact"
+                role="tabpanel"
+                aria-labelledby="pills-contact-tab"
+              >
+                Contact Information:
+                <br />
+                Email:{" "}
+                <a href="mailto:batata@tryhosting.com.br">
+                  batata@tryhosting.com.br
+                </a>
               </div>
             </div>
-            <div
-              className="tab-pane fade"
-              id="pills-contact"
-              role="tabpanel"
-              aria-labelledby="pills-contact-tab"
-            >
-              Contact Information:
-              <br />
-              Email:{" "}
-              <a href="mailto:batata@tryhosting.com.br">
-                batata@tryhosting.com.br
-              </a>
-            </div>
           </div>
-        </div>
-      </FadeIn>
-    );
+        </FadeIn>
+      );
+    }
   }
 }
 

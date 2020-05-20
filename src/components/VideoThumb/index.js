@@ -52,7 +52,7 @@ class VideoThumb extends Component {
               </div>
             </div>
             <img
-              src={this.state.thumb}
+              src={`/assets/${this.state.thumb}`}
               width="1280"
               height="720"
               alt="Thumbnail do video"
@@ -63,7 +63,7 @@ class VideoThumb extends Component {
         <div className={styles.videoInfo}>
           <div className={styles.channelImage}>
             <Link to={`/channel/${this.state.channelLink}`}>
-              <img src={this.state.channelPicture} alt="Avatar do Canal" />
+              <img src={`/assets/${this.state.channelPicture}`} alt="Avatar do Canal" />
             </Link>
           </div>
           <div className={styles.videoFooter}>

@@ -8,7 +8,7 @@ import { withTranslation } from "react-i18next";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import Loading from "../Loading/";
 import api from "../../library/api";
-import { login, isAuthenticated } from "../../services/auth";
+import { isAuthenticated } from "../../services/auth";
 
 import styles from "./newchannel.module.scss";
 
