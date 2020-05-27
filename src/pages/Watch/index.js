@@ -113,6 +113,10 @@ class Watch extends Component {
       alert(t("errors.commentTooBig"));
       return;
     }
+    var escapedComment = this.state.tempComment
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
     const response = await api.sendComment(
       this.state.videoData.id,
       this.state.tempComment
@@ -121,12 +125,12 @@ class Watch extends Component {
       var commentsArray = this.state.comments;
       commentsArray.unshift({
         id: response.data.id,
-        msg: this.state.tempComment,
+        msg: escapedComment,
         likes: 0,
         dislikes: 0,
         accountUsername: localStorage.getItem("username"),
         accountPicture: localStorage.getItem("profilePicture"),
-        isLiked: null
+        isLiked: null,
       });
       this.setState({
         comments: commentsArray,
@@ -466,10 +470,13 @@ class Watch extends Component {
                 {this.state.comments.map((comment) => (
                   <li className={`${styles.media} media`} key={comment.id}>
                     <img src={`/assets/${comment.accountPicture}`} alt="..." />
-                    <div className="media-body">
-                      <a className="mt-0 mb-1">{comment.accountUsername}</a>
-                      {comment.msg}
-                    </div>
+                    <div
+                      className="media-body"
+                      dangerouslySetInnerHTML={{
+                        __html: `<a className="mt-0 mb-1">${comment.accountUsername}</a>
+                      ${comment.msg}`,
+                      }}
+                    ></div>
                   </li>
                 ))}
               </ul>

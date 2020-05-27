@@ -1,13 +1,18 @@
+// React Imports
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import { withTranslation } from "react-i18next";
-import api from "../../library/api";
 
+// Other Imports
+import api from "../../library/api";
+import FadeIn from "react-fade-in";
+
+// Components
 import VideoThumb from "../../components/VideoThumb";
 import Loading from "../Loading";
 
+// Style
 import styles from "./home.module.scss";
-import FadeIn from "react-fade-in";
 
 class Home extends Component {
   constructor(props) {
@@ -27,7 +32,6 @@ class Home extends Component {
   }
 
   render() {
-    console.log("Rendering....");
     const { t } = this.props;
     if (this.state.isLoading) {
       return <Loading />;

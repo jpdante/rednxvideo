@@ -1,7 +1,7 @@
 export function getLanguage() {
     if(getAutoLanguage()) return getBrowserLanguage();
     var lang = localStorage.getItem("lang")
-    if(lang !== null && lang instanceof String) return lang;
+    if(lang !== null && lang !== undefined) return lang;
     return getBrowserLanguage();
 }
 
@@ -11,12 +11,7 @@ export function getBrowserLanguage() {
 
 export function getAutoLanguage() {
     var autoLang = localStorage.getItem("autoLang")
-    if(autoLang === null || (autoLang instanceof Boolean) === false) {
-        setAutoLanguage(true);
-        return false;
-    }
-    if(autoLang === true) return true;
-    return false;
+    return autoLang === 'true';
 }
 
 export function setLanguage(lang) {

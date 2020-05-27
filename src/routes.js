@@ -1,15 +1,21 @@
+// React Imports
 import React, { Suspense } from "react";
-import { BrowserRouter, Route, Switch/*, Redirect*/ } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+// Other Imports
 import api from "./library/api";
 
+// Components
+import NavBar from "./components/NavBar";
+import SideBar from "./components/SideBar";
+import Modals from "./components/Modals";
+
+// Pages
 import Home from "./pages/Home";
 import Discover from "./pages/Discover";
 import Watch from "./pages/Watch";
 import Category from "./pages/Category";
 import Channel from "./pages/Channel";
-import NewChannel from "./pages/NewChannel";
-import SelectChannel from "./pages/NewChannel";
 import Hot from "./pages/Hot";
 import Live from "./pages/Live";
 import Recommended from "./pages/Recommended";
@@ -18,11 +24,7 @@ import Following from "./pages/Following";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LoadingFullScreen from "./pages/LoadingFullScreen";
-import Loading from "./pages/Loading";
 import NotFound from "./pages/NotFound";
-
-import NavBar from "./components/NavBar";
-import SideBar from "./components/SideBar";
 
 /*const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -44,6 +46,7 @@ const Routes = () => {
     <Suspense fallback={<LoadingFullScreen />}>
       <div className="content">
         <NavBar />
+        <Modals />
         <div className="wrapper">
           <SideBar />
           <Switch>
@@ -59,10 +62,6 @@ const Routes = () => {
             <Route path="/following" component={Following} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
-            <Route path="/new-channel" component={NewChannel} />
-            <Route path="/select-channel" component={SelectChannel} />
-            <Route path="/dev/loadingfs" component={LoadingFullScreen} />
-            <Route path="/dev/loading" component={Loading} />
             <Route path="*" component={NotFound} />
           </Switch>
         </div>

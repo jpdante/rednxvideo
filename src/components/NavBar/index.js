@@ -168,9 +168,9 @@ class NavBar extends Component {
                 <Link className="dropdown-item" to="/profile">
                   {t("components.navbar.profile")}
                 </Link>
-                <Link className="dropdown-item" to="/language">
+                <button className="dropdown-item" data-toggle="modal" data-target="#languageModal">
                   {t("components.navbar.language")}
-                </Link>
+                </button>
                 <button className="dropdown-item" onClick={this.logout}>
                   {t("components.navbar.logout")}
                 </button>
