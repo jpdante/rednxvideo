@@ -1,7 +1,7 @@
 import React from "react";
 import Routes from "./routes";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import './services/i18n'
+import "./services/i18n";
 import {
   faSearch,
   faBars,
@@ -21,7 +21,9 @@ import {
   faShare,
   faEye,
   faEyeSlash,
-  faFlag
+  faFlag,
+  faUndo,
+  faRedo,
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/default.scss";
 
@@ -44,7 +46,9 @@ library.add(
   faShare,
   faEye,
   faEyeSlash,
-  faFlag
+  faFlag,
+  faUndo,
+  faRedo
 );
 
 const App = () => <Routes />;

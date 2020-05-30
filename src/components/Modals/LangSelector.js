@@ -46,7 +46,7 @@ class LangSelector extends Component {
     }
   }
 
-  change = (e) => {
+  changeLanguage = (e) => {
     switch (e.target.value) {
       case "Auto":
         setAutoLanguage(true);
@@ -101,7 +101,7 @@ class LangSelector extends Component {
             <div className="modal-body">
               <select
                 className="form-control"
-                onChange={this.change}
+                onChange={this.changeLanguage}
                 value={this.state.value}
               >
                 <option>Auto</option>

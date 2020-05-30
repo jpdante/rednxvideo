@@ -25,6 +25,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import LoadingFullScreen from "./pages/LoadingFullScreen";
 import NotFound from "./pages/NotFound";
+import Profile from "./pages/Profile";
 
 /*const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
@@ -60,6 +61,7 @@ const Routes = () => {
             <Route path="/recommended" component={Recommended} />
             <Route path="/history" component={History} />
             <Route path="/following" component={Following} />
+            <Route path="/profile" component={Profile} />
             <Route path="/login" component={Login} />
             <Route path="/register" component={Register} />
             <Route path="*" component={NotFound} />

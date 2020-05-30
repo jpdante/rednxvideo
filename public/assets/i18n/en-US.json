@@ -74,6 +74,7 @@
     "password": "Password",
     "passwordMinLength": "Password must be at least 8 characters",
     "save": "Save",
+    "uploadAvatar": "Upload avatar",
     "username": "Username",
     "usernameOrEmail": "Username or Email"
   },
@@ -103,6 +104,16 @@
     "newChannel": {
       "createChannel": "Create channel",
       "newChannel": "New Channel"
+    },
+    "profile": {
+      "changePassword": "Change password",
+      "confirmNewPassword": "Confirm new password",
+      "newPassword": "New password",
+      "oldPassword": "Old password",
+      "profile": "Profile",
+      "security": "Security",
+      "settings": "Settings",
+      "updatePassword": "Update password"
     },
     "recommended": {
       "title": "Recommended"

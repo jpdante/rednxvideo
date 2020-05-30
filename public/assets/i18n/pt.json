@@ -74,6 +74,7 @@
     "password": "Senha",
     "passwordMinLength": "A senha precisa ter no mínimo 8 caracteres",
     "save": "Salvar",
+    "uploadAvatar": "Enviar foto de perfil",
     "username": "Usuário",
     "usernameOrEmail": "Usuário ou Email"
   },
@@ -103,6 +104,16 @@
     "newChannel": {
       "createChannel": "Criar canal",
       "newChannel": "Novo Canal"
+    },
+    "profile": {
+      "changePassword": "Alterar senha",
+      "confirmNewPassword": "Confirmar nova senha",
+      "newPassword": "Nova senha",
+      "oldPassword": "Senha antiga",
+      "profile": "Perfil",
+      "security": "Segurança",
+      "settings": "Configurações",
+      "updatePassword": "Atualizar senha"
     },
     "recommended": {
       "title": "Recomendados"
