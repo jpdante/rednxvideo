@@ -6,9 +6,17 @@ import { withTranslation } from "react-i18next";
 import FadeIn from "react-fade-in";
 
 import Loading from "../Loading/";
+import {
+  getProfilePicture,
+  getProfileUsername,
+  getProfileEmail,
+} from "../../services/profile";
 
 import api from "../../library/api";
 import { isAuthenticated } from "../../services/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import styles from "./profile.module.scss";
 
 class Profile extends Component {
   constructor(props) {
@@ -16,6 +24,8 @@ class Profile extends Component {
     this.state = {
       channelName: "",
       channelLink: "",
+      username: getProfileUsername(),
+      email: getProfileEmail(),
       captcha: "",
       error: "",
       errorData: {},
@@ -47,9 +57,9 @@ class Profile extends Component {
       } else {
         return (
           <FadeIn className="page-content" childClassName="fix-fadein">
-            <div className="container mt-4">
+            <div className="container mt-2">
               <div className="row">
-                <div className="col-2">
+                <div className="col mt-2">
                   <div
                     className="nav flex-column nav-pills"
                     id="v-pills-tab"
@@ -80,18 +90,18 @@ class Profile extends Component {
                     </a>
                     <a
                       className="nav-link"
-                      id="v-pills-messages-tab"
+                      id="v-pills-settings-tab"
                       data-toggle="pill"
-                      href="#v-pills-messages"
+                      href="#v-pills-settings"
                       role="tab"
-                      aria-controls="v-pills-messages"
+                      aria-controls="v-pills-settings"
                       aria-selected="false"
                     >
                       {t("pages.profile.settings")}
                     </a>
                   </div>
                 </div>
-                <div className="col-10">
+                <div className="col-10 mt-2">
                   <div className="tab-content" id="v-pills-tabContent">
                     <div
                       className="tab-pane fade show active"
@@ -99,22 +109,79 @@ class Profile extends Component {
                       role="tabpanel"
                       aria-labelledby="v-pills-home-tab"
                     >
-                      <h4>{t("pages.profile.profile")}</h4>
+                      <h4>{t("pages.profile.publicProfile")}</h4>
                       <hr />
-                      <img
-                        src={`/assets/${localStorage.getItem(
-                          "profilePicture"
-                        )}`}
-                        className="rounded mx-auto d-inline-block align-top"
-                        alt="Profile"
-                      />
-                      <button
-                        className="dropdown-item"
-                        data-toggle="modal"
-                        data-target="#uploadAvatarModal"
-                      >
-                        {t("components.navbar.language")}
-                      </button>
+                      <div className="row">
+                        <div className="col-8">
+                          <div className="form-group">
+                            <label>{t("pages.profile.username")}</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              required
+                              onChange={(e) =>
+                                this.setState({ username: e.target.value })
+                              }
+                              value={this.state.username}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>{t("pages.profile.email")}</label>
+                            <input
+                              type="text"
+                              className="form-control"
+                              required
+                              onChange={(e) =>
+                                this.setState({ email: e.target.value })
+                              }
+                              value={this.state.email}
+                            />
+                          </div>
+                          <div className="form-group">
+                            <label>{t("pages.profile.password")}</label>
+                            <input
+                              type="password"
+                              className="form-control"
+                              aria-describedby="emailHelp"
+                              required
+                              onChange={(e) =>
+                                this.setState({ password: e.target.value })
+                              }
+                            />
+                          </div>
+                          <button
+                            type="button"
+                            className="btn btn-primary mx-1"
+                            onClick={this.updateProfile}
+                          >
+                            {this.state.loading ? (
+                              <div className="spinner-border" role="status">
+                                <span className="sr-only">Loading...</span>
+                              </div>
+                            ) : (
+                              t("pages.profile.updateProfile")
+                            )}
+                          </button>
+                        </div>
+                        <div className="col-4">
+                          <div
+                            class={styles.profilePicture}
+                            data-toggle="modal"
+                            data-target="#uploadAvatarModal"
+                          >
+                            <div className={styles.overlay}>
+                              <div className={styles.icon}>
+                                <FontAwesomeIcon icon="edit" size="lg" />
+                              </div>
+                            </div>
+                            <img
+                              src={getProfilePicture()}
+                              className="rounded mx-auto d-inline-block align-top"
+                              alt="Profile"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                     <div
                       className="tab-pane fade"
@@ -185,19 +252,12 @@ class Profile extends Component {
                     </div>
                     <div
                       className="tab-pane fade"
-                      id="v-pills-messages"
-                      role="tabpanel"
-                      aria-labelledby="v-pills-messages-tab"
-                    >
-                      ...
-                    </div>
-                    <div
-                      className="tab-pane fade"
                       id="v-pills-settings"
                       role="tabpanel"
                       aria-labelledby="v-pills-settings-tab"
                     >
-                      ...
+                      <h4>{t("pages.profile.settings")}</h4>
+                      <hr />
                     </div>
                   </div>
                 </div>

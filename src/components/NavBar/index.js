@@ -5,6 +5,7 @@ import { withTranslation } from "react-i18next";
 
 import { isAuthenticated, logout } from "../../services/auth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { getProfilePicture } from "../../services/profile";
 
 import styles from "./navbar.module.scss";
 
@@ -79,6 +80,16 @@ class NavBar extends Component {
               </Link>
             </li>
             <li className="nav-item">
+              <a
+                className="nav-link text-center"
+                data-toggle="modal"
+                data-target="#languageModal"
+                href="#a"
+              >
+                {t("components.navbar.language")}
+              </a>
+            </li>
+            <li className="nav-item">
               <Link className="nav-link text-center" to="/login">
                 {t("components.navbar.login")}
               </Link>
@@ -126,18 +137,25 @@ class NavBar extends Component {
         </div>
         <div className={`${styles.navbarDesktop} col`}>
           <ul className="navbar-nav mt-lg-0 mx-auto float-right">
-            <form
+            <div
               className={`form-inline ${
                 this.state.isAuthenticated ? "noAuthentication" : "show"
               }`}
             >
+              <button
+                className="btn btn-sm btn-secondary mx-1"
+                data-toggle="modal"
+                data-target="#languageModal"
+              >
+                {t("components.navbar.language")}
+              </button>
               <Link className={`btn btn-sm btn-secondary mx-1`} to="/login">
                 {t("components.navbar.login")}
               </Link>
               <Link className={`btn btn-sm btn-primary mx-1`} to="/register">
                 {t("components.navbar.register")}
               </Link>
-            </form>
+            </div>
 
             <li
               className={`${
@@ -153,7 +171,7 @@ class NavBar extends Component {
               >
                 <div>
                   <img
-                    src={`/assets/${localStorage.getItem("profilePicture")}`}
+                    src={getProfilePicture()}
                     width="30"
                     height="30"
                     className="rounded mx-auto d-inline-block align-top"
@@ -168,7 +186,11 @@ class NavBar extends Component {
                 <Link className="dropdown-item" to="/profile">
                   {t("components.navbar.profile")}
                 </Link>
-                <button className="dropdown-item" data-toggle="modal" data-target="#languageModal">
+                <button
+                  className="dropdown-item"
+                  data-toggle="modal"
+                  data-target="#languageModal"
+                >
                   {t("components.navbar.language")}
                 </button>
                 <button className="dropdown-item" onClick={this.logout}>

@@ -11,6 +11,7 @@ import $ from "jquery";
 import TextareaAutosize from "react-autosize-textarea";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { isAuthenticated } from "../../services/auth";
+import { getProfilePicture, getProfileUsername } from "../../services/profile";
 
 import FadeIn from "react-fade-in";
 import NextVideo from "../../components/NextVideo";
@@ -128,8 +129,8 @@ class Watch extends Component {
         msg: escapedComment,
         likes: 0,
         dislikes: 0,
-        accountUsername: localStorage.getItem("username"),
-        accountPicture: localStorage.getItem("profilePicture"),
+        accountUsername: getProfileUsername(),
+        accountPicture: getProfilePicture().replace("http://public.tryhosting.com.br/pp/", "").replace(".webp", ""),
         isLiked: null,
       });
       this.setState({
@@ -422,10 +423,7 @@ class Watch extends Component {
               <div className={styles.postComment}>
                 {this.state.isAuthenticated ? (
                   <div className={`${styles.media} media`}>
-                    <img
-                      src={`/assets/${localStorage.getItem("profilePicture")}`}
-                      alt="profile pic"
-                    />
+                    <img src={getProfilePicture()} alt="profile pic" />
                     <div className={`${styles.authComment} media-body`}>
                       <TextareaAutosize
                         className="form-control"
@@ -469,9 +467,17 @@ class Watch extends Component {
               <ul className="list-unstyled">
                 {this.state.comments.map((comment) => (
                   <li className={`${styles.media} media`} key={comment.id}>
-                    <img src={`/assets/${comment.accountPicture}`} alt="..." />
+                    <img
+                      src={`http://public.tryhosting.com.br/pp/${comment.accountPicture}.webp`}
+                      alt="..."
+                    />
                     <div
                       className="media-body"
+                      style={{
+                        overflow: 'hidden',
+                        whiteSpace: 'wrap',
+                        textOverflow: 'ellipsis'
+                      }}
                       dangerouslySetInnerHTML={{
                         __html: `<a className="mt-0 mb-1">${comment.accountUsername}</a>
                       ${comment.msg}`,

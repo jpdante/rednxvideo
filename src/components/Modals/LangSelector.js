@@ -13,33 +13,34 @@ class LangSelector extends Component {
     super(props);
     if (getAutoLanguage()) {
       this.state = {
-        value: "Auto",
+        language: "Auto",
+        flag: "auto"
       };
     } else {
       switch (getLanguage()) {
         case "en":
           this.state = {
-            value: "English",
+            language: "English",
           };
           break;
         case "pt":
           this.state = {
-            value: "Portugues",
+            language: "Portugues",
           };
           break;
         case "en-US":
           this.state = {
-            value: "English",
+            language: "English",
           };
           break;
         case "pt-BR":
           this.state = {
-            value: "Portugues",
+            language: "Portugues",
           };
           break;
         default:
           this.state = {
-            value: "Auto",
+            language: "Auto",
           };
           break;
       }
@@ -47,29 +48,33 @@ class LangSelector extends Component {
   }
 
   changeLanguage = (e) => {
-    switch (e.target.value) {
+    var autoLanguage = false;
+    var language = "en";
+    switch (e) {
       case "Auto":
-        setAutoLanguage(true);
-        setLanguage("en");
-        i18n.changeLanguage(getLanguage());
+        autoLanguage = true;
+        language = "en";
         break;
       case "English":
-        setAutoLanguage(false);
-        setLanguage("en");
-        i18n.changeLanguage("en");
+        autoLanguage = false;
+        language = "en";
         break;
       case "Portugues":
-        setAutoLanguage(false);
-        setLanguage("pt");
-        i18n.changeLanguage("pt");
+        autoLanguage = false;
+        language = "pt";
         break;
       default:
-        setAutoLanguage(true);
-        this.setState({ value: "Auto" });
-        i18n.changeLanguage(getLanguage());
+        autoLanguage = false;
+        language = "en";
         break;
     }
-    this.setState({ value: e.target.value });
+    setAutoLanguage(autoLanguage);
+    setLanguage(language);
+    i18n.changeLanguage(getLanguage());
+    this.setState({
+      language: e,
+      flag: language,
+    });
   };
 
   render() {
@@ -98,16 +103,45 @@ class LangSelector extends Component {
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
-            <div className="modal-body">
-              <select
-                className="form-control"
-                onChange={this.changeLanguage}
-                value={this.state.value}
-              >
-                <option>Auto</option>
-                <option>English</option>
-                <option>Portugues</option>
-              </select>
+            <div className="modal-body text-center">
+              <div className="dropdown">
+                <button
+                  className="btn dropdown-toggle btn-outline-primary"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  {this.state.language}
+                </button>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <button
+                    className="dropdown-item"
+                    onClick={() => {
+                      this.changeLanguage("Auto");
+                    }}
+                  >
+                    Auto
+                  </button>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => {
+                      this.changeLanguage("English");
+                    }}
+                  >
+                    English
+                  </button>
+                  <button
+                    className="dropdown-item"
+                    onClick={() => {
+                      this.changeLanguage("Portugues");
+                    }}
+                  >
+                    Portugues
+                  </button>
+                </div>
+              </div>
             </div>
             <div className="modal-footer">
               <button

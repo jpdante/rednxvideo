@@ -7,6 +7,7 @@ import { withTranslation } from "react-i18next";
 
 import { login, isAuthenticated } from "../../services/auth";
 import api from "../../library/api";
+import { setProfileUsername, setProfilePicture, setProfileEmail } from "../../services/profile";
 
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import styles from "./login.module.scss";
@@ -54,8 +55,9 @@ class Login extends Component {
       this.setState({ loading: false });
       if (response.data.success) {
         login(response.data.token);
-        localStorage.setItem("username", response.data.account.username);
-        localStorage.setItem("profilePicture", response.data.account.profilePicture);
+        setProfileUsername(response.data.account.username);
+        setProfilePicture(response.data.account.profilePicture);
+        setProfileEmail(email);
         window.location.reload();
       } else {
         this.setState({
@@ -64,8 +66,8 @@ class Login extends Component {
         });
       }
     } catch (err) {
-      this.setState({ loading: false });
       this.setState({
+        loading: false,
         error: "errors.loginError",
       });
     }

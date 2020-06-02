@@ -4,6 +4,8 @@ import { withTranslation } from "react-i18next";
 
 import AvatarEditor from "react-avatar-editor";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import api from "../../../library/api";
+import { setProfilePicture } from "../../../services/profile";
 
 import styles from "./uploadavatar.module.scss";
 
@@ -13,19 +15,55 @@ class UploadAvatar extends Component {
     this.fileInput = React.createRef();
     this.state = {
       file: null,
-      fileName: "Choose file...",
+      fileName: null,
       scale: 1.0,
       borderRadius: 0.0,
       rotate: 0.0,
+      uploading: false,
+      success: false,
     };
   }
+
+  setEditorRef = (editor) => (this.editor = editor);
 
   changeFile = (e) => {
     if (this.fileInput.current.files.length > 0) {
       this.setState({
+        success: false,
         file: this.fileInput.current.files[0],
         fileName: this.fileInput.current.files[0].name,
       });
+    }
+  };
+
+  savePicture = async () => {
+    if (this.editor) {
+      this.setState({ error: null, success: false });
+      if (this.state.file == null) {
+        this.setState({ error: "errors.noImageSelected" });
+        return;
+      }
+      try {
+        this.setState({ uploading: true });
+        const canvas = this.editor.getImage().toDataURL("image/png");
+        const response = await api.uploadNewPicture(canvas);
+        if (response.data.success) {
+          this.setState({ uploading: false, success: true });
+          setProfilePicture(response.data.guid);
+          window.location.reload();
+        } else {
+          this.setState({
+            uploading: false,
+            error: response.data.message,
+            errorData: response.data,
+          });
+        }
+      } catch (err) {
+        this.setState({ uploading: false, error: err });
+      }
+    } else {
+      console.error("No editor found!");
+      alert("No editor found!");
     }
   };
 
@@ -76,7 +114,13 @@ class UploadAvatar extends Component {
               </button>
             </div>
             <div className="modal-body">
+              {this.state.error && (
+                <div className="alert alert-danger" role="alert">
+                  {t(this.state.error, this.state.errorData)}
+                </div>
+              )}
               <AvatarEditor
+                ref={this.setEditorRef}
                 image={this.state.file}
                 width={150}
                 height={150}
@@ -102,7 +146,9 @@ class UploadAvatar extends Component {
                   className="custom-file-label"
                   htmlFor="validatedCustomFile"
                 >
-                  {this.state.fileName}
+                  {this.state.fileName == null
+                    ? t("modals.chooseFile")
+                    : this.state.fileName}
                 </label>
               </div>
               <div className="form-group">
@@ -158,7 +204,7 @@ class UploadAvatar extends Component {
                 </button>
                 <input
                   type="range"
-                  className="form-control-range"
+                  className="form-control-range mt-1"
                   min="0"
                   max="360"
                   step="1"
@@ -182,9 +228,22 @@ class UploadAvatar extends Component {
               </button>
               <button
                 type="button"
-                className={`btn btn-primary ${this.state.file == null ? "disabled" : "" }`}
+                className={`btn ${
+                  this.state.success ? "btn-success" : "btn-primary"
+                }`}
+                onClick={this.savePicture}
               >
-                {t("modals.save")}
+                {this.state.uploading ? (
+                  <div className="spinner-border" role="status">
+                    <span className="sr-only">{t("modals.saving")}</span>
+                  </div>
+                ) : this.state.success ? (
+                  t("modals.saved")
+                ) : this.state.file == null ? (
+                  t("modals.removePicture")
+                ) : (
+                  t("modals.save")
+                )}
               </button>
             </div>
           </div>

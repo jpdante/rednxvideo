@@ -87,6 +87,14 @@ const api = {
   getNewVideos: async () => {
     return await net.get("/feed/newvideos");
   },
+  // ~~~~ PROFILE ~~~~
+  uploadNewPicture: async (picture) => {
+    const response = await net.post("/profile/putpicture", {
+      picture: picture,
+    });
+    api.checkSession(response);
+    return response;
+  }
 };
 
 export default api;

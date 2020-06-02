@@ -24,6 +24,7 @@ import {
   faFlag,
   faUndo,
   faRedo,
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import "./styles/default.scss";
 
@@ -48,7 +49,8 @@ library.add(
   faEyeSlash,
   faFlag,
   faUndo,
-  faRedo
+  faRedo,
+  faEdit
 );
 
 const App = () => <Routes />;
